@@ -26,7 +26,6 @@ function Login(props) {
 
     // sign in
     const handleSignIn = async () => {
-        alert(process.env.REACT_APP_RESELLER_API_BASE_URL)
         const axiosConfigForSignIn = {
             url: process.env.REACT_APP_RESELLER_API_BASE_URL + process.env.REACT_APP_RESELLER_API_VERSION_URL + "/resellers/sign-in"
             , method: "POST"
@@ -45,7 +44,7 @@ function Login(props) {
         try {
             // setIsLoading(true);
             const signInResult = await axios.request(axiosConfigForSignIn);
-            setCookie('reseller_cookies', signInResult.data.data, { expires:false, maxAge: 5 * 60 * 1000 });
+            setCookie('reseller_cookies', signInResult.data.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             router.push('/')
         } catch (error) {
             console.log("error:")
