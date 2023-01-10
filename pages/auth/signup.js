@@ -48,7 +48,7 @@ function Signup(props) {
         try {
             const ResellerResults = await axios.request(axiosConfigForResellerAdd);
 
-            setCookie('reseller_cookies', ResellerResults.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
+            setCookie('reseller_cookies', ResellerResults.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             router.push('/')
         }
         catch (error) {
