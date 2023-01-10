@@ -14,11 +14,11 @@ function Home(props) {
         router.push('/auth/login')
     }
 
-    if (process.browser){
-        if (props.status_code === 401) {
-            router.push('/auth/login')
-        }
-    }
+    // if (process.browser){
+    //     if (props.status_code === 401) {
+    //         router.push('/auth/login')
+    //     }
+    // }
 
     return (
         <>
