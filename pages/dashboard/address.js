@@ -7,7 +7,7 @@ import Head from 'next/head';
 function Address(props) {
     const router = useRouter()
     
-    console.log("props Profile page:"); console.log(props);
+    console.log("props address page:"); console.log(props);
     
     const [showToastWelcome, setShowToastWelcome] = useState(true);
     const cookiesData = JSON.parse(props.cookies_data);
@@ -185,7 +185,7 @@ function Address(props) {
                                                         </li>
 
                                                         <li className="">
-                                                            <Link className='btn btn-hover-blue dropdown' href={'/profiles/profile'}>
+                                                            <Link className='btn btn-hover-blue dropdown' href={'/dashboard'}>
                                                                 Profil
                                                             </Link>
                                                         </li>
@@ -551,18 +551,26 @@ function Address(props) {
 
                         <ul className="nav nav-pills user-nav-pills" id="pills-tab" role="tablist">
                                     <li className="nav-item" role="presentation">
-                                        <Link href={'address'}>
+                                        <Link href={'/dashboard/address'}>
                                             <button className="nav-link active" id="pills-address-tab" data-bs-toggle="pill" data-bs-target="#pills-address" type="button" role="tab" aria-controls="pills-address" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
                                                 Alamat</button>
                                         </Link>
                                     </li>
 
                                     <li className="nav-item" role="presentation">
-                                        <Link href={'profile'}>
+                                        <Link href={'/dashboard'}>
                                             <button className="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                             Profil</button>
                                         </Link>
                                     </li>
+
+                                    <li class="nav-item" role="presentation">
+                                        <Link href={'/dashboard/topup'}>
+                                        <button class="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                            Top Up</button>
+                                        </Link>
+                                    </li>
+
                                     {/* <li className="nav-item" role="presentation">
                                 <button className="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                                     DashBoard</button>

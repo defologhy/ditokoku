@@ -5,9 +5,11 @@ import React, { useState } from 'react'
 import Head from 'next/head';
 
 function Home(props) {
-    console.log("props Home page:"); console.log(props);
+    
     const router = useRouter()
     const [showToastWelcome, setShowToastWelcome] = useState(true);
+    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : {});
+    console.log("props Home page:"); console.log(cookiesData);
 
     const handleSignOut = async () => {
         deleteCookie('reseller_cookies')
@@ -21,123 +23,261 @@ function Home(props) {
     // }
 
     return (
-        <>
+        <div>
             <Head>
                 <title>Ditokoku.id</title>
                 <link rel="shortcut icon" href="/images/ditokoku2.png" />
             </Head>
             {/* header fix menu start */}
             <header>
-                {/* <div className="header-top">
-    <div className="container-fluid-lg">
-        <div className="row">
-            <div className="col-xxl-3 d-xxl-block d-none">
-                <div className="top-left-header">
-                    <i className="iconly-Location icli text-white"></i>
-                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
-                </div>
-            </div>
 
-            <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
-                <div className="header-offer">
-                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
-                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6>Something you love is now on sale!
-                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                        !</a>
-                                </h6>
+            {
+                props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
+                    <div>
+                        <div className="header-top">
+                    <div className="container-fluid-lg">
+                        <div className="row">
+                            <div className="col-xxl-3 d-xxl-block d-none">
+                                {/* <div className="top-left-header">
+                                    <i className="iconly-Location icli text-white"></i>
+                                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                                </div> */}
                             </div>
-                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                    </strong>
 
-                                </h6>
-                            </div>
-                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6>Something you love is now on sale!
-                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                        !</a>
-                                </h6>
-                            </div>
-                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                    </strong>
+                            <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                                {/* <div className="header-offer">
+                                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
+                                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
 
-                                </h6>
-                            </div>
-                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6>Something you love is now on sale!
-                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                        !</a>
-                                </h6>
-                            </div>
-                        </div></div></div>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
 
-                        
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div></div></div>
+
+                                        
+                                    </div>
+                                </div> */}
+                            </div>
+
+                            <div className="col-lg-3">
+                                <ul className="about-list right-nav-about">
+                                    <li className="right-nav-list">
+                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
+                                                <span>Lengkapi Data Diri</span>
+                                            </button>
+                                    </li>
+                                    <li className="right-nav-list">
+                                        <div className="dropdown theme-form-select">
+                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
+                                                <span>Logout</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                    </div>
+                    :  props.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
+                    <div>
+                    <div className="header-top">
+                    <div className="container-fluid-lg">
+                        <div className="row">
+                            <div className="col-xxl-3 d-xxl-block d-none">
+                                {/* <div className="top-left-header">
+                                    <i className="iconly-Location icli text-white"></i>
+                                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                                </div> */}
+                            </div>
 
-            <div className="col-lg-3">
-                <ul className="about-list right-nav-about">
-                    <li className="right-nav-list">
-                        <div className="dropdown theme-form-select">
-                            <button className="btn dropdown-toggle" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="/images/country/united-states.png" className="img-fluid blur-up lazyloaded" alt="" />
-                                <span>English</span>
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="select-language">
-                                <li>
-                                    <a className="dropdown-item" href="!#" id="english">
-                                        <img src="/images/country/united-kingdom.png" className="img-fluid blur-up lazyload" alt="" />
-                                        <span>English</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="!#" id="france">
-                                        <img src="/images/country/germany.png" className="img-fluid blur-up lazyload" alt="" />
-                                        <span>Germany</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="!#" id="chinese">
-                                        <img src="/images/country/turkish.png" className="img-fluid blur-up lazyload" alt="" />
-                                        <span>Turki</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                                {/* <div className="header-offer">
+                                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
+                                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
+
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
+
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div></div></div>
+
+                                        
+                                    </div>
+                                </div> */}
+                            </div>
+
+                            <div className="col-lg-3">
+                                <ul className="about-list right-nav-about">
+                                    <li className="right-nav-list">
+                                        <div className="dropdown theme-form-select">
+                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
+                                                <span>Saldo Bonus: Rp 150.000</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                    <li className="right-nav-list">
+                                        <div className="dropdown theme-form-select">
+                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
+                                                <span>Saldo Regular: Rp 0</span>
+                                            </button>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </li>
-                    <li className="right-nav-list">
-                        <div className="dropdown theme-form-select">
-                            <button className="btn dropdown-toggle" type="button" id="select-dollar" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span>USD</span>
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-end sm-dropdown-menu" aria-labelledby="select-dollar">
-                                <li>
-                                    <a className="dropdown-item" id="aud" href="!#">AUD</a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" id="eur" href="!#">EUR</a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" id="cny" href="!#">CNY</a>
-                                </li>
-                            </ul>
+                    </div>
+                </div>
+                    </div>
+                    :
+                    <div>
+                    <div className="header-top">
+                    <div className="container-fluid-lg">
+                        <div className="row">
+                            <div className="col-xxl-3 d-xxl-block d-none">
+                                {/* <div className="top-left-header">
+                                    <i className="iconly-Location icli text-white"></i>
+                                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                                </div> */}
+                            </div>
+
+                            <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                                {/* <div className="header-offer">
+                                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
+                                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
+
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
+
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div></div></div>
+
+                                        
+                                    </div>
+                                </div> */}
+                            </div>
+
+                            <div className="col-lg-3">
+                                <ul className="about-list right-nav-about">
+                                    <li className="right-nav-list">
+                                        <Link href={'/auth/signup'}>
+                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
+                                                <span>Daftar Reseller</span>
+                                            </button>
+                                        </Link>
+                                    </li>
+                                    <li className="right-nav-list">
+                                        <Link href={'/auth/login'}>
+                                            <div className="dropdown theme-form-select">
+                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
+                                                    <span>Login Reseller</span>
+                                                </button>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div> */}
+                    </div>
+                </div>
+                    </div>
+
+            }
+                
 
                 <div className="top-nav top-header sticky-header">
                     <div className="container-fluid-lg">
@@ -149,7 +289,7 @@ function Home(props) {
                                             <i className="fa-solid fa-bars"></i>
                                         </span>
                                     </button>
-                                    <a href="!#" className="web-logo nav-logo">
+                                    <a href="!#" className="web-logo">
                                         <img src="/images/ditokoku.png" className="img-fluid blur-up lazyloaded" alt="" />
                                     </a>
 
@@ -181,20 +321,20 @@ function Home(props) {
                                                             </Link>
                                                         </li>
 
-                                                        {
+                                                        {/* {
                                                             props.status_code === 200 ?
-                                                                <>
+                                                                <div>
                                                                     <li className="">
-                                                                        <Link className='btn btn-hover-blue dropdown' href={'/profiles/profile'}>
-                                                                            Profil
+                                                                        <Link className='btn btn-hover-blue dropdown' href={'/dashboard'}>
+                                                                            Dashboard
                                                                         </Link>
                                                                     </li>
-                                                                </>
+                                                                </div>
                                                                 :
-                                                                <>
-                                                                </>
+                                                                <div>
+                                                                </div>
 
-                                                        }
+                                                        } */}
 
 
                                                         {/* <li className="nav-item dropdown">
@@ -429,6 +569,9 @@ function Home(props) {
                                                     </div>
                                                 </div>
                                             </li>
+
+                                            { props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
+                                            <div>
                                             <li className="right-side onhover-dropdown">
                                                 <div className="delivery-login-box">
                                                     <div className="delivery-icon">
@@ -442,34 +585,28 @@ function Home(props) {
 
                                                 <div className="onhover-div onhover-div-login">
                                                     <ul className="user-box-name">
-                                                        {
-                                                            props.status_code === 401 ?
-                                                                <>
-                                                                    <li className="product-box-contain">
-                                                                        <Link href="/auth/login">Masuk</Link>
-                                                                    </li>
-
-                                                                    <li className="product-box-contain">
-                                                                        <Link href="/auth/signup">Daftar</Link>
-                                                                    </li>
-                                                                </>
-                                                                :
-
-                                                                <>
-
-                                                                    <li className="product-box-contain">
-                                                                        <a href='javascript:void(0)' onClick={handleSignOut}>
-                                                                            Keluar
-                                                                        </a>
-                                                                    </li>
-                                                                </>
-
-                                                        }
-
-
+                                                        <Link href={'/dashboard'}>
+                                                        <li className="product-box-contain">
+                                                            <a href='#javascript'>
+                                                                Profil
+                                                            </a>
+                                                        </li>
+                                                        </Link>
+                                                    </ul>
+                                                    <ul className="user-box-name">
+                                                        <li className="product-box-contain">
+                                                            <a href='#javascript' onClick={handleSignOut}>
+                                                                Keluar
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </li>
+                                            </div>
+                                            :
+                                            <div>
+                                            </div>
+                                        }
                                         </ul>
                                     </div>
                                 </div>
@@ -616,7 +753,7 @@ function Home(props) {
             <section className="product-section product-section-3">
                 <div className="container-fluid-lg">
                     <div className="title">
-                        <h2>Top Selling Items</h2>
+                        <h2>Produk Best Seller</h2>
                     </div>
                     <div className="row g-sm-4 g-3">
                         <div className="col-xxl-12 ratio_110">
@@ -1272,13 +1409,13 @@ function Home(props) {
                 </div>
             </section>
             {/* produk menu end */}
-        </>
+        </div>
     )
 }
 
 // Get Server Side Props
 export async function getServerSideProps({ req, res }) {
-    console.log("getcookie profile page");
+    console.log("getcookie home page");
     getCookie('reseller_cookies', { req, res })
     if (!getCookie('reseller_cookies', { req, res })) {
         return {

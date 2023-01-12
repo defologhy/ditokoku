@@ -44,7 +44,8 @@ function Login(props) {
         try {
             // setIsLoading(true);
             const signInResult = await axios.request(axiosConfigForSignIn);
-            setCookie('reseller_cookies', signInResult.data.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
+            // setCookie('reseller_cookies', signInResult.data.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
+            setCookie('reseller_cookies', signInResult.data.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             router.push('/')
         } catch (error) {
             console.log("error:")
