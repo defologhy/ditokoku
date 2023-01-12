@@ -3,6 +3,7 @@ import Router, { useRouter } from 'next/router';
 import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next';
 import React, { useState } from 'react'
 import Head from 'next/head';
+import { Modal, Button, Form } from 'react-bootstrap';
 
 function TopUpBalanceRegular(props) {
     const router = useRouter()
