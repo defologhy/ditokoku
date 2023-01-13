@@ -94,20 +94,20 @@ function Home(props) {
                             <div className="col-lg-2">
                                 <ul className="about-list right-nav-about">
                                     <li className="right-nav-list">
-                                        {/* <Link href={'/auth/signup'}> */}
+                                        <Link href={'/auth/signup'}>
                                             <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
                                                 <span>Download</span>
                                             </button>
-                                        {/* </Link> */}
+                                        </Link>
                                     </li>
                                     <li className="right-nav-list">
-                                        {/* <Link href={'/auth/login'}> */}
+                                        <Link href={'/auth/login'}>
                                             <div className="dropdown theme-form-select">
                                                 <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
                                                     <span>Ikuti Kami Di </span>
                                                 </button>
                                             </div>
-                                        {/* </Link> */}
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>
@@ -115,19 +115,13 @@ function Home(props) {
 
                             </div>
 
-                            <div className="col-lg-6">
+                            <div className="col-lg-3">
                                 <ul className="about-list right-nav-about">
-                                
                                     <li className="right-nav-list">
-                                    <Link href={'/dashboard'}>
                                             <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
                                                 <span>Lengkapi Data Diri</span>
                                             </button>
-                                            </Link>
-
                                     </li>
-                                    
-                                    
                                     <li className="right-nav-list">
                                         <div className="dropdown theme-form-select">
                                             <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
@@ -135,7 +129,6 @@ function Home(props) {
                                             </button>
                                         </div>
                                     </li>
-                                    
                                 </ul>
                             </div>
                         </div>
@@ -204,11 +197,11 @@ function Home(props) {
                         <div className="col-lg-2">
                                 <ul className="about-list right-nav-about">
                                     <li className="right-nav-list">
-                                        {/* <Link href={'/auth/signup'}> */}
+                                        <Link href={'/auth/signup'}>
                                             <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
                                                 <span>Download</span>
                                             </button>
-                                        {/* </Link> */}
+                                        </Link>
                                     </li>
                                     <li className="right-nav-list">
                                         <Link href={'/auth/login'}>
@@ -230,7 +223,7 @@ function Home(props) {
                                     <li className="right-nav-list">
                                         <div className="dropdown theme-form-select">
                                             <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
-                                                <span>{cookiesData.reseller_full_name}</span>
+                                                <span>Nama User</span>
                                             </button>
                                         </div>
                                     </li>
@@ -309,11 +302,11 @@ function Home(props) {
                             <div className="col-lg-2">
                                 <ul className="about-list right-nav-about">
                                     <li className="right-nav-list">
-                                        {/* <Link href={'/auth/signup'}> */}
+                                        <Link href={'/auth/signup'}>
                                             <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
                                                 <span>Download</span>
                                             </button>
-                                        {/* </Link> */}
+                                        </Link>
                                     </li>
                                     <li className="right-nav-list">
                                         <Link href={'/auth/login'}>
@@ -417,7 +410,7 @@ function Home(props) {
     
                                                 <li className="nav-item">
                                                         <div class="search-box">
-                                                            <div class="input-group" style={{width:'200px', marginRight:'200px'}}>
+                                                            <div class="input-group" style={{width:'200px', marginRight:'360px'}}>
                                                                 <input type="search" class="form-control" placeholder="Cari ditokoku...." aria-label="Recipient's username" aria-describedby="button-addon2" />
                                                                 {/* <button class="btn search-button-2" type="button" id="button-addon2">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -427,16 +420,16 @@ function Home(props) {
                                                         
                                                         </li>
 
-                                                        <li className="">
-                                                        Saldo Bonus: Rp. {cookiesData.balance_bonus_amount} <br/>
-                                                        Saldo Regular: Rp. 0.00
-                                                        </li>
+                                                        {/* <li className="">
+                                                        Saldo Bonus: Rp. 0 <br/>
+                                                        Saldo Regular: Rp. 0 
+                                                        </li> */}
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            { props.status_code === 200 ?
+
                             <div class="rightside-box">
                                 {/* <div class="search-full">
                                     <div class="input-group">
@@ -473,7 +466,7 @@ function Home(props) {
                                                 </span>
                                             </button>
 
-                                            {/* <div class="onhover-div">
+                                            <div class="onhover-div">
                                                 <ul class="cart-list">
                                                     <li class="product-box-contain">
                                                         <div class="drop-cart">
@@ -523,11 +516,12 @@ function Home(props) {
                                                     <a href="checkout.html" class="btn btn-sm cart-button theme-bg-color
                                                     text-white">Checkout</a>
                                                 </div>
-                                            </div> */}
+                                            </div>
                                         </div>
                                     </li>
-                                    
-                                            {/* <li className="right-side onhover-dropdown">
+                                    { props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
+                                            <div>
+                                            <li className="right-side onhover-dropdown">
                                                 <div className="delivery-login-box">
                                                     <div className="delivery-icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -556,13 +550,14 @@ function Home(props) {
                                                         </li>
                                                     </ul>
                                                 </div>
-                                            </li> */}
-                                        
+                                            </li>
+                                            </div>
+                                            :
+                                            <div>
+                                            </div>
+                                        }
                                 </ul>
                             </div>
-                            :
-                            <div></div>
-                            }
                         </div>
                     </div>
                 </div>
