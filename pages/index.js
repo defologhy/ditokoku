@@ -557,6 +557,15 @@ function Home(props) {
                                                             </Link>
                                                         </ul>
                                                         <ul className="user-box-name">
+                                                            <Link href={'/dashboard/topup'}>
+                                                                <li className="product-box-contain">
+                                                                    <a href='#javascript'>
+                                                                        Top Up Saldo
+                                                                    </a>
+                                                                </li>
+                                                            </Link>
+                                                        </ul>
+                                                        <ul className="user-box-name">
                                                             <li className="product-box-contain">
                                                                 <a href='#javascript' onClick={handleSignOut}>
                                                                     Keluar
