@@ -27,7 +27,7 @@ function Login(props) {
     // sign in
     const handleSignIn = async () => {
         const axiosConfigForSignIn = {
-            url: process.env.REACT_APP_RESELLER_API_BASE_URL + process.env.REACT_APP_RESELLER_API_VERSION_URL + "/resellers/sign-in"
+            url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + "/resellers/sign-in"
             , method: "POST"
             , timeout: 40000
             , responseType: "json"

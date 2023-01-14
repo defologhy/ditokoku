@@ -27,7 +27,7 @@ function Signup(props) {
     const handleSignUpConfirm = async () => {
         //Execute Add Data
         const axiosConfigForResellerAdd = {
-            url: process.env.REACT_APP_RESELLER_API_BASE_URL + process.env.REACT_APP_RESELLER_API_VERSION_URL + "/resellers"
+            url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + "/resellers"
             , method: "POST"
             , timeout: 40000
             , responseType: "json"
@@ -47,8 +47,8 @@ function Signup(props) {
         //Execute Axios Configuration For JsonContentValidation
         try {
             const ResellerResults = await axios.request(axiosConfigForResellerAdd);
-            // setCookie('reseller_cookies', ResellerResults.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
-            setCookie('reseller_cookies', ResellerResults.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
+            setCookie('reseller_cookies', ResellerResults.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
+            // setCookie('reseller_cookies', ResellerResults.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             router.push('/')
         }
         catch (error) {

@@ -1,26 +1,88 @@
 import Link from 'next/link'
 import Router, { useRouter } from 'next/router';
 import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head';
+import axios from 'axios'
 
 function Home(props) {
-    
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+    const getData = async () => {
+        await getDataBanners();
+    }
+
+    const getDataBanners = async () => {
+        try {
+
+            //Set Axios Configuration For Sign In to NextJS Server
+            const axiosConfigForGetData = {
+                url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + '/banners'
+                , method: "GET"
+                , timeout: 40000
+                , responseType: "json"
+                , responseEncoding: "utf8"
+                , headers: { "Content-Type": "application/json" }
+            };
+
+            //Execute Axios Configuration For JsonContentValidation
+            try {
+                const getDataResults = await axios.request(axiosConfigForGetData);
+                const getData = getDataResults.data;
+                console.log("getdataBanner", getData)
+                
+                setBannerId((getData.data.length!=0 ? getData.data[0].banner_id : null))
+                setBannerImageFilename((getData.data.length!=0 ? getData.data[0].banner_filename : null))
+
+                // form.setFieldsValue({
+                //     bannerId : (getData.data.length!=0 ? getData.data[0].banner_id : '')
+                //     , imageConstruct: (getData.data.length!=0 ? getData.data[0].banner_filename : '')
+                //     , descriptionConstruct: (getData.data.length!=0 ? getData.data[0].banner_description : '')/
+                // });
+            } catch (error) {
+                console.log(error)
+                if (error.response == null) {
+                    // Modal.error({
+                    //     title: "Internal Server Error",
+                    //     content: "Error On Get Data SKU Plant Storage Location. (Please contact you system administrator and report this error message)",
+                    // });
+                } else {
+                    // if (error.response.status === 401) {
+                    //     Router.push("/security/sign-in");
+                    //     return {}
+                    // }
+                    // Modal.error({
+                    //     title: error.response.data.error_title,
+                    //     content: error.response.data.error_message,
+                    // });
+                }
+            }
+
+        } catch (error) {
+            console.log(error.error_message)
+            console.log(error)
+            // Modal.error({
+            //     title: error.error_title,
+            //     content: error.error_message,
+            // });
+        }
+    }
+
+
     const router = useRouter()
     const [showToastWelcome, setShowToastWelcome] = useState(true);
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : {});
+    const [bannerId, setBannerId] = useState(null)
+    const [bannerImageFilename, setBannerImageFilename] = useState(null)
+    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : null);
     console.log("props Home page:"); console.log(cookiesData);
 
     const handleSignOut = async () => {
         deleteCookie('reseller_cookies')
         router.push('/auth/login')
     }
-
-    // if (process.browser){
-    //     if (props.status_code === 401) {
-    //         router.push('/auth/login')
-    //     }
-    // }
 
     return (
         <div>
@@ -31,20 +93,20 @@ function Home(props) {
             {/* header fix menu start */}
             <header>
 
-            {
-                props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
-                    <div>
-                        <div className="header-top bg-dark">
-                    <div className="container-fluid-lg">
-                        <div className="row">
-                            {/* <div className="col-xxl-3 d-xxl-block d-none">
+                {
+                    props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
+                        <div>
+                            <div className="header-top bg-dark">
+                                <div className="container-fluid-lg">
+                                    <div className="row">
+                                        {/* <div className="col-xxl-3 d-xxl-block d-none">
                                 <div className="top-left-header">
                                     <i className="iconly-Location icli text-white"></i>
                                     <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
                                 </div>
                             </div> */}
 
-                            {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                                        {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
                                 <div className="header-offer">
                                     <div className="notification-slider slick-initialized slick-slider slick-vertical">
                                         <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
@@ -91,70 +153,70 @@ function Home(props) {
                                 </div>
                             </div> */}
 
-                            <div className="col-lg-2">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        {/* <Link href={'/auth/signup'}> */}
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                <span>Download</span>
-                                            </button>
-                                        {/* </Link> */}
-                                    </li>
-                                    <li className="right-nav-list">
-                                        {/* <Link href={'/auth/login'}> */}
-                                            <div className="dropdown theme-form-select">
-                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                    <span>Ikuti Kami Di </span>
-                                                </button>
-                                            </div>
-                                        {/* </Link> */}
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-lg-3">
-
-                            </div>
-
-                            <div className="col-lg-6">
-                                <ul className="about-list right-nav-about">
-                                
-                                    <li className="right-nav-list">
-                                    <Link href={'/dashboard'}>
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                <span>Lengkapi Data Diri</span>
-                                            </button>
-                                            </Link>
-
-                                    </li>
-                                    
-                                    
-                                    <li className="right-nav-list">
-                                        <div className="dropdown theme-form-select">
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
-                                                <span>Logout</span>
-                                            </button>
+                                        <div className="col-lg-2">
+                                            <ul className="about-list right-nav-about">
+                                                <li className="right-nav-list">
+                                                    {/* <Link href={'/auth/signup'}> */}
+                                                    <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                        <span>Download</span>
+                                                    </button>
+                                                    {/* </Link> */}
+                                                </li>
+                                                <li className="right-nav-list">
+                                                    {/* <Link href={'/auth/login'}> */}
+                                                    <div className="dropdown theme-form-select">
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Ikuti Kami Di </span>
+                                                        </button>
+                                                    </div>
+                                                    {/* </Link> */}
+                                                </li>
+                                            </ul>
                                         </div>
-                                    </li>
-                                    
-                                </ul>
+                                        <div className="col-lg-3">
+
+                                        </div>
+
+                                        <div className="col-lg-6">
+                                            <ul className="about-list right-nav-about">
+
+                                                <li className="right-nav-list">
+                                                    <Link href={'/dashboard'}>
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Dapatkan Saldo Bonus</span>
+                                                        </button>
+                                                    </Link>
+
+                                                </li>
+
+
+                                                <li className="right-nav-list">
+                                                    <div className="dropdown theme-form-select">
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }} onClick={handleSignOut}>
+                                                            <span>Logout</span>
+                                                        </button>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                    </div>
-                    :  props.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
-                    <div>
-                    <div className="header-top bg-dark">
-                    <div className="container-fluid-lg">
-                        <div className="row">
-                            {/* <div className="col-xxl-3 d-xxl-block d-none">
+                        : props.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
+                            <div>
+                                <div className="header-top bg-dark">
+                                    <div className="container-fluid-lg">
+                                        <div className="row">
+                                            {/* <div className="col-xxl-3 d-xxl-block d-none">
                                 <div className="top-left-header">
                                     <i className="iconly-Location icli text-white"></i>
                                     <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
                                 </div>
                             </div> */}
 
-                            {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                                            {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
                                 <div className="header-offer">
                                     <div className="notification-slider slick-initialized slick-slider slick-vertical">
                                         <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
@@ -201,58 +263,58 @@ function Home(props) {
                                 </div>
                             </div> */}
 
-                        <div className="col-lg-2">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        {/* <Link href={'/auth/signup'}> */}
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                <span>Download</span>
-                                            </button>
-                                        {/* </Link> */}
-                                    </li>
-                                    <li className="right-nav-list">
-                                        <Link href={'/auth/login'}>
-                                            <div className="dropdown theme-form-select">
-                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                    <span>Ikuti Kami Di </span>
-                                                </button>
+                                            <div className="col-lg-2">
+                                                <ul className="about-list right-nav-about">
+                                                    <li className="right-nav-list">
+                                                        {/* <Link href={'/auth/signup'}> */}
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Download</span>
+                                                        </button>
+                                                        {/* </Link> */}
+                                                    </li>
+                                                    <li className="right-nav-list">
+                                                        <Link href={'/auth/login'}>
+                                                            <div className="dropdown theme-form-select">
+                                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                    <span>Ikuti Kami Di </span>
+                                                                </button>
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-lg-3">
+                                            <div className="col-lg-3">
 
-                            </div>
+                                            </div>
 
-                            <div className="col-lg-6">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        <div className="dropdown theme-form-select">
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
-                                                <span>{cookiesData.reseller_full_name}</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    <li className="right-nav-list">
+                                            <div className="col-lg-6">
+                                                <ul className="about-list right-nav-about">
+                                                    <li className="right-nav-list">
+                                                        <div className="dropdown theme-form-select">
+                                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                <span>{cookiesData.reseller_full_name}</span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    {/* <li className="right-nav-list">
                                         <div className="dropdown theme-form-select">
                                             <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
                                                 <span>Logout</span>
                                             </button>
                                         </div>
-                                    </li>
-                                </ul>
+                                    </li> */}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                    </div>
-                    :
-                    <div>
-                    <div className="header-top bg-dark">
-                    <div className="container-fluid-lg">
-                        <div className="row">
-                            {/* <div className="col-xxl-3 d-xxl-block d-none">
+                            :
+                            <div>
+                                <div className="header-top bg-dark">
+                                    <div className="container-fluid-lg">
+                                        <div className="row">
+                                            {/* <div className="col-xxl-3 d-xxl-block d-none">
                                 <div className="top-left-header">
                                     <i className="iconly-Location icli text-white"></i>
                                     <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
@@ -306,139 +368,139 @@ function Home(props) {
                                 </div>
                             </div> */}
 
-                            <div className="col-lg-2">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        {/* <Link href={'/auth/signup'}> */}
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                <span>Download</span>
-                                            </button>
-                                        {/* </Link> */}
-                                    </li>
-                                    <li className="right-nav-list">
-                                        <Link href={'/auth/login'}>
-                                            <div className="dropdown theme-form-select">
-                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                    <span>Ikuti Kami Di </span>
-                                                </button>
-                                            </div>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-lg-3">
-
-                            </div>
-                            <div className="col-lg-6">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        <Link href={'/auth/signup'}>
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                <span>Daftar Reseller</span>
-                                            </button>
-                                        </Link>
-                                    </li>
-                                    <li className="right-nav-list">
-                                        <Link href={'/auth/login'}>
-                                            <div className="dropdown theme-form-select">
-                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                    <span>Login Reseller</span>
-                                                </button>
-                                            </div>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                    </div>
-
-            }
-                
-
-                <div class="top-nav top-header sticky-header">
-            <div class="container-fluid-lg">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="navbar-top">
-                            <button class="navbar-toggler d-xl-none d-inline navbar-menu-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
-                                <span class="navbar-toggler-icon">
-                                    <i class="fa-solid fa-bars"></i>
-                                </span>
-                            </button>
-                            <a href="index.html" class="web-logo nav-logo">
-                                <img src="/images/ditokoku.png" className="img-fluid blur-up lazyloaded" alt="" />
-                            </a>
-
-                            <div class="header-nav-middle">
-                                <div class="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
-                                    <div class="offcanvas offcanvas-collapse order-xl-2" id="primaryMenu">
-                                        <div class="offcanvas-header navbar-shadow">
-                                            <h5>Menu</h5>
-                                            <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                        </div>
-                                        <div class="offcanvas-body">
-                                            <ul class="navbar-nav">
-    
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown">Kategori</a>
-    
-                                                    <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a class="dropdown-item" href="index.html">Kartshop</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-2.html">Sweetshop</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-3.html">Organic</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-4.html">Supershop</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-5.html">Classic shop</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-6.html">Furniture</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-7.html">Search Oriented</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-8.html">Category Focus</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-9.html">Fashion</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-    
-                                                <li className="nav-item">
-                                                        <div class="search-box">
-                                                            <div class="input-group" style={{width:'200px', marginRight:'200px'}}>
-                                                                <input type="search" class="form-control" placeholder="Cari ditokoku...." aria-label="Recipient's username" aria-describedby="button-addon2" />
-                                                                {/* <button class="btn search-button-2" type="button" id="button-addon2">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                                                </button> */}
+                                            <div className="col-lg-2">
+                                                <ul className="about-list right-nav-about">
+                                                    <li className="right-nav-list">
+                                                        {/* <Link href={'/auth/signup'}> */}
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Download</span>
+                                                        </button>
+                                                        {/* </Link> */}
+                                                    </li>
+                                                    <li className="right-nav-list">
+                                                        <Link href={'/auth/login'}>
+                                                            <div className="dropdown theme-form-select">
+                                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                    <span>Ikuti Kami Di </span>
+                                                                </button>
                                                             </div>
-                                                        </div>
-                                                        
-                                                        </li>
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className="col-lg-3">
 
-                                                        <li className="">
-                                                        Saldo Bonus: Rp. {cookiesData.balance_bonus_amount} <br/>
-                                                        Saldo Regular: Rp. 0.00
-                                                        </li>
-                                            </ul>
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <ul className="about-list right-nav-about">
+                                                    <li className="right-nav-list">
+                                                        <Link href={'/auth/signup'}>
+                                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                <span>Daftar Reseller</span>
+                                                            </button>
+                                                        </Link>
+                                                    </li>
+                                                    <li className="right-nav-list">
+                                                        <Link href={'/auth/login'}>
+                                                            <div className="dropdown theme-form-select">
+                                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                    <span>Login Reseller</span>
+                                                                </button>
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            { props.status_code === 200 ?
-                            <div class="rightside-box">
-                                {/* <div class="search-full">
+
+                }
+
+
+                <div class="top-nav top-header sticky-header">
+                    <div class="container-fluid-lg">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="navbar-top">
+                                    <button class="navbar-toggler d-xl-none d-inline navbar-menu-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
+                                        <span class="navbar-toggler-icon">
+                                            <i class="fa-solid fa-bars"></i>
+                                        </span>
+                                    </button>
+                                    <Link href="/" class="web-logo nav-logo">
+                                        <img src="/images/ditokoku.png" className="img-fluid blur-up lazyloaded" alt="" />
+                                    </Link>
+
+                                    <div class="header-nav-middle">
+                                        <div class="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
+                                            <div class="offcanvas offcanvas-collapse order-xl-2" id="primaryMenu">
+                                                <div class="offcanvas-header navbar-shadow">
+                                                    <h5>Menu</h5>
+                                                    <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                                </div>
+                                                <div class="offcanvas-body">
+                                                    <ul class="navbar-nav">
+
+                                                        <li class="nav-item dropdown">
+                                                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown">Kategori</a>
+
+                                                            <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <a class="dropdown-item" href="index.html">Kartshop</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="index-2.html">Sweetshop</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="index-3.html">Organic</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="index-4.html">Supershop</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="index-5.html">Classic shop</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="index-6.html">Furniture</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="index-7.html">Search Oriented</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="index-8.html">Category Focus</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item" href="index-9.html">Fashion</a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+
+                                                        <li className="nav-item">
+                                                            <div class="search-box">
+                                                                <div class="input-group" style={{ width: '200px', marginRight: '200px' }}>
+                                                                    <input type="search" class="form-control" placeholder="Cari ditokoku...." aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                                                    {/* <button class="btn search-button-2" type="button" id="button-addon2">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                                </button> */}
+                                                                </div>
+                                                            </div>
+
+                                                        </li>
+
+                                                        <li className="">
+                                                            Saldo Bonus: Rp. {(cookiesData ? cookiesData.balance_bonus_amount : 0)} <br />
+                                                            Saldo Regular: Rp. {(cookiesData ? cookiesData.balance_regular_amount : 0)}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {props.status_code === 200 ?
+                                        <div class="rightside-box">
+                                            {/* <div class="search-full">
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search font-light"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -449,8 +511,8 @@ function Home(props) {
                                         </span>
                                     </div>
                                 </div> */}
-                                <ul class="right-side-menu">
-                                    {/* <li class="right-side">
+                                            <ul class="right-side-menu">
+                                                {/* <li class="right-side">
                                         <div class="delivery-login-box">
                                             <div class="delivery-icon">
                                                 <div class="search-box">
@@ -459,115 +521,61 @@ function Home(props) {
                                             </div>
                                         </div>
                                     </li> */}
-                                    <li class="right-side">
-                                        <a href="wishlist.html" class="btn p-0 position-relative header-wishlist">
+                                                <li class="right-side">
+                                                    {/* <a href="wishlist.html" class="btn p-0 position-relative header-wishlist">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                                        </a>
-                                    </li>
-                                    <li class="right-side">
-                                        <div class="onhover-dropdown header-badge">
-                                            <button type="button" class="btn p-0 position-relative header-wishlist">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                                                <span class="position-absolute top-0 start-100 translate-middle badge">2
-                                                    <span class="visually-hidden">unread messages</span>
-                                                </span>
-                                            </button>
+                                        </a> */}
+                                                </li>
+                                                <li class="right-side">
+                                                    <button type="button" class="btn p-0 position-relative header-wishlist">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                                        <span class="position-absolute top-0 start-100 translate-middle badge">2
+                                                            <span class="visually-hidden">unread messages</span>
+                                                        </span>
+                                                    </button>
+                                                </li>
 
-                                            {/* <div class="onhover-div">
-                                                <ul class="cart-list">
-                                                    <li class="product-box-contain">
-                                                        <div class="drop-cart">
-                                                            <a href="product-left-thumbnail.html" class="drop-image">
-                                                                <img src="../assets/images/vegetable/product/1.png" class="blur-up lazyloaded" alt="" />
-                                                            </a>
-
-                                                            <div class="drop-contain">
-                                                                <a href="product-left-thumbnail.html">
-                                                                    <h5>Fantasy Crunchy Choco Chip Cookies</h5>
-                                                                </a>
-                                                                <h6><span>1 x</span> $80.58</h6>
-                                                                <button class="close-button close_button">
-                                                                    <i class="fa-solid fa-xmark"></i>
-                                                                </button>
-                                                            </div>
+                                                <li className="right-side onhover-dropdown">
+                                                    <div className="delivery-login-box">
+                                                        <div className="delivery-icon">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                                         </div>
-                                                    </li>
-
-                                                    <li class="product-box-contain">
-                                                        <div class="drop-cart">
-                                                            <a href="product-left-thumbnail.html" class="drop-image">
-                                                                <img src="../assets/images/vegetable/product/2.png" class="blur-up lazyloaded" alt="" />
-                                                            </a>
-
-                                                            <div class="drop-contain">
-                                                                <a href="product-left-thumbnail.html">
-                                                                    <h5>Peanut Butter Bite Premium Butter Cookies 600 g
-                                                                    </h5>
-                                                                </a>
-                                                                <h6><span>1 x</span> $25.68</h6>
-                                                                <button class="close-button close_button">
-                                                                    <i class="fa-solid fa-xmark"></i>
-                                                                </button>
-                                                            </div>
+                                                        <div className="delivery-detail">
+                                                            <h6>Hello,</h6>
+                                                            <h5>My Account</h5>
                                                         </div>
-                                                    </li>
-                                                </ul>
+                                                    </div>
 
-                                                <div class="price-box">
-                                                    <h5>Total :</h5>
-                                                    <h4 class="theme-color fw-bold">$106.58</h4>
-                                                </div>
+                                                    <div className="onhover-div onhover-div-login">
+                                                        <ul className="user-box-name">
+                                                            <Link href={'/dashboard'}>
+                                                                <li className="product-box-contain">
+                                                                    <a href='#javascript'>
+                                                                        Profil
+                                                                    </a>
+                                                                </li>
+                                                            </Link>
+                                                        </ul>
+                                                        <ul className="user-box-name">
+                                                            <li className="product-box-contain">
+                                                                <a href='#javascript' onClick={handleSignOut}>
+                                                                    Keluar
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
 
-                                                <div class="button-group">
-                                                    <a href="cart.html" class="btn btn-sm cart-button">View Cart</a>
-                                                    <a href="checkout.html" class="btn btn-sm cart-button theme-bg-color
-                                                    text-white">Checkout</a>
-                                                </div>
-                                            </div> */}
+                                            </ul>
                                         </div>
-                                    </li>
-                                    
-                                            {/* <li className="right-side onhover-dropdown">
-                                                <div className="delivery-login-box">
-                                                    <div className="delivery-icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                                    </div>
-                                                    <div className="delivery-detail">
-                                                        <h6>Hello,</h6>
-                                                        <h5>My Account</h5>
-                                                    </div>
-                                                </div>
-
-                                                <div className="onhover-div onhover-div-login">
-                                                    <ul className="user-box-name">
-                                                        <Link href={'/dashboard'}>
-                                                        <li className="product-box-contain">
-                                                            <a href='#javascript'>
-                                                                Profil
-                                                            </a>
-                                                        </li>
-                                                        </Link>
-                                                    </ul>
-                                                    <ul className="user-box-name">
-                                                        <li className="product-box-contain">
-                                                            <a href='#javascript' onClick={handleSignOut}>
-                                                                Keluar
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li> */}
-                                        
-                                </ul>
+                                        :
+                                        <div></div>
+                                    }
+                                </div>
                             </div>
-                            :
-                            <div></div>
-                            }
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
             </header>
             {/* header fix menu end */}
 
@@ -613,34 +621,21 @@ function Home(props) {
             {/* mobile menu end */}
 
             {/* banner menu */}
-            <section className="home-section-2 home-section-bg pt-0 overflow-hidden">
-                <div className="container-fluid p-0">
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="slider-animate">
-                                <div>
-                                    <div className="home-contain rounded-0 p-0 bg-size blur-up lazyloaded" style={{ backgroundImage: 'url("/images/fashion/home-banner/1.jpg")', background: 'cover', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat', display: 'block' }}>
-                                        <img src="/images/fashion/home-banner/1.jpg" className="img-fluid bg-img blur-up lazyload" alt="" style={{ display: 'none' }} />
-                                        <div className="home-detail home-big-space p-center-left home-overlay position-relative">
-                                            <div className="container-fluid-lg">
-                                                <div>
-                                                    <h6 className="ls-expanded text-uppercase text-danger">Weekend Special offer
-                                                    </h6>
-                                                    <h1 className="heding-2">Premium Quality</h1>
-                                                    <h5 className="text-content">Fresh &amp; Top Quality Dry Fruits are available here!
-                                                    </h5>
-                                                    <button className="btn theme-bg-color btn-md text-white fw-bold mt-md-4 mt-2 mend-auto">Shop
-                                                        Now <i className="fa-solid fa-arrow-right icon"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+            <div className="container-fluid p-0">
+                <div class="header-row" id="header-row" style={{ padding: '0px', overflow: 'hidden', height: '100%' }}>
+
+                    <div class="container-fluid" style={{ padding: '0px' }}>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <a class="navbar-brand logo" href="index.html">
+                                <img src={process.env.REACT_APP_DITOKOKU_API_BASE_URL +'/assets/images/banner/'+bannerImageFilename} alt="banner image" style={{ width: '100%' }} crossOrigin='anonymous'/>
+                                   
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
             {/* banner menu end */}
 
 

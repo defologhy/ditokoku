@@ -38,7 +38,7 @@ function TopUpBalanceRegular(props) {
     const handleInsertTopUpConfirm = async () => {
         //Execute Add Data
         const axiosConfigForResellerAdd = {
-            url: process.env.REACT_APP_RESELLER_API_BASE_URL + process.env.REACT_APP_RESELLER_API_VERSION_URL + "/reseller-balances/top-up"
+            url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + "/reseller-balances/top-up"
             , method: "POST"
             , timeout: 40000
             , responseType: "json"
@@ -648,7 +648,7 @@ function TopUpBalanceRegular(props) {
                             <div className="profile-contain">
                                 <div className="profile-image">
                                     <div className="position-relative">
-                                        <img crossorigin="anonymous" src={(cookiesData.reseller_image_filename!==null ? process.env.REACT_APP_RESELLER_API_BASE_URL + '/assets/images/profil/reseller/' +cookiesData.reseller_image_filename : '/images/inner-page/user/avatar.png')} className="blur-up update_img lazyloaded" alt="" />
+                                        <img crossorigin="anonymous" src={(cookiesData.reseller_image_filename!==null ? process.env.REACT_APP_DITOKOKU_API_BASE_URL + '/assets/images/profil/reseller/' +cookiesData.reseller_image_filename : '/images/inner-page/user/avatar.png')} className="blur-up update_img lazyloaded" alt="" />
                                         {/* <div className="cover-icon">
                                             <i className="fa-solid fa-pen">
                                                 <input type="file" onchange="readURL(this,0)" />
