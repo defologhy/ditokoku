@@ -29,6 +29,7 @@ function Profil(props) {
     const handleCloseModalConfirm = () => setShowModalConfirm(false);
 
     const [genderData, setGenderData] = useState([]);
+    const [categoryProducts, setCategoryProducts] = useState([])
 
     useEffect(() => {
         getGender();
@@ -86,6 +87,67 @@ function Profil(props) {
                     // });
                     setShowModalError(true)
                     setModalErrorMessage({ title: error.response.data.error_title, message: error.response.data.error_message })
+                }
+            }
+
+        } catch (error) {
+            console.log(error.error_message)
+            console.log(error)
+            // Modal.error({
+            //     title: error.error_title,
+            //     content: error.error_message,
+            // });
+        }
+    }
+
+    useEffect(() => {
+        getCategoryProducts();
+    }, []);
+    const getCategoryProducts = async () => {
+        await getDataCategoryProducts();
+    }
+    const getDataCategoryProducts = async () => {
+        try {
+
+            //Set Axios Configuration For Sign In to NextJS Server
+            const axiosConfigForGetData = {
+                url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + '/category-products'
+                , method: "GET"
+                , timeout: 40000
+                , responseType: "json"
+                , responseEncoding: "utf8"
+                , headers: { "Content-Type": "application/json" }
+            };
+
+            //Execute Axios Configuration For JsonContentValidation
+            try {
+                const getDataResults = await axios.request(axiosConfigForGetData);
+                const getData = getDataResults.data;
+                console.log("getDataCategoryProducts", getData)
+                
+                setCategoryProducts((getData.data.length!=0 ? getData.data : []))
+
+                // form.setFieldsValue({
+                //     bannerId : (getData.data.length!=0 ? getData.data[0].banner_id : '')
+                //     , imageConstruct: (getData.data.length!=0 ? getData.data[0].banner_filename : '')
+                //     , descriptionConstruct: (getData.data.length!=0 ? getData.data[0].banner_description : '')/
+                // });
+            } catch (error) {
+                console.log(error)
+                if (error.response == null) {
+                    // Modal.error({
+                    //     title: "Internal Server Error",
+                    //     content: "Error On Get Data SKU Plant Storage Location. (Please contact you system administrator and report this error message)",
+                    // });
+                } else {
+                    // if (error.response.status === 401) {
+                    //     Router.push("/security/sign-in");
+                    //     return {}
+                    // }
+                    // Modal.error({
+                    //     title: error.response.data.error_title,
+                    //     content: error.response.data.error_message,
+                    // });
                 }
             }
 
