@@ -160,11 +160,11 @@ function Profil(props) {
         //Execute Axios Configuration For JsonContentValidation
         try {
             const ResellerResults = await axios.request(axiosConfigForResellerAdd);
-            setCookie('reseller_cookies', ResellerResults.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
-            // setCookie('reseller_cookies', ResellerResults.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
+            // setCookie('reseller_cookies', ResellerResults.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
+            setCookie('reseller_cookies', ResellerResults.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             setShowModalConfirm(false);
             setShowModalUpdate(false);
-            router.push('/dashboard')
+            router.push('/dashboard/profile')
         }
         catch (error) {
             console.log("error:")
@@ -391,7 +391,7 @@ function Profil(props) {
                                 <ul className="about-list right-nav-about">
                                 
                                     <li className="right-nav-list">
-                                    <Link href={'/dashboard'}>
+                                    <Link href={'/dashboard/profile'}>
                                             <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
                                                 <span>Dapatkan Saldo Bonus</span>
                                             </button>
@@ -758,7 +758,7 @@ function Profil(props) {
 
                                                 <div className="onhover-div onhover-div-login">
                                                     <ul className="user-box-name">
-                                                        <Link href={'/dashboard'}>
+                                                        <Link href={'/dashboard/profile'}>
                                                         <li className="product-box-contain">
                                                             <a href='#javascript'>
                                                                 Profil
@@ -874,16 +874,23 @@ function Profil(props) {
                                     </li>
 
                                     <li className="nav-item" role="presentation">
-                                        <Link href={'/dashboard'}>
+                                        <Link href={'/dashboard/profile'}>
                                             <button className="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                                 Profil</button>
                                         </Link>
                                     </li>
 
-                                    <li className="nav-item" role="presentation">
-                                        <Link href={'/dashboard/address'}>
-                                        <button className="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                                            Top Up</button>
+                                    <li class="nav-item" role="presentation">
+                                        <Link href={'/dashboard/bank-accounts'}>
+                                        <button class="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                            Akun Bank</button>
+                                        </Link>
+                                    </li>
+
+                                    <li class="nav-item" role="presentation">
+                                        <Link href={'/dashboard/topup-balance-regular'}>
+                                        <button class="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                            Top Up Saldo Regular</button>
                                         </Link>
                                     </li>
                                 </ul>

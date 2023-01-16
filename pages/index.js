@@ -8,11 +8,15 @@ import axios from 'axios'
 function Home(props) {
 
     useEffect(() => {
-        getData();
+        getBanners();
+        getCategoryProducts();
     }, []);
 
-    const getData = async () => {
+    const getBanners = async () => {
         await getDataBanners();
+    }
+    const getCategoryProducts = async () => {
+        await getDataCategoryProducts();
     }
 
     const getDataBanners = async () => {
@@ -70,12 +74,67 @@ function Home(props) {
             // });
         }
     }
+    const getDataCategoryProducts = async () => {
+        try {
+
+            //Set Axios Configuration For Sign In to NextJS Server
+            const axiosConfigForGetData = {
+                url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + '/category-products'
+                , method: "GET"
+                , timeout: 40000
+                , responseType: "json"
+                , responseEncoding: "utf8"
+                , headers: { "Content-Type": "application/json" }
+            };
+
+            //Execute Axios Configuration For JsonContentValidation
+            try {
+                const getDataResults = await axios.request(axiosConfigForGetData);
+                const getData = getDataResults.data;
+                console.log("getDataCategoryProducts", getData)
+                
+                setCategoryProducts((getData.data.length!=0 ? getData.data : []))
+
+                // form.setFieldsValue({
+                //     bannerId : (getData.data.length!=0 ? getData.data[0].banner_id : '')
+                //     , imageConstruct: (getData.data.length!=0 ? getData.data[0].banner_filename : '')
+                //     , descriptionConstruct: (getData.data.length!=0 ? getData.data[0].banner_description : '')/
+                // });
+            } catch (error) {
+                console.log(error)
+                if (error.response == null) {
+                    // Modal.error({
+                    //     title: "Internal Server Error",
+                    //     content: "Error On Get Data SKU Plant Storage Location. (Please contact you system administrator and report this error message)",
+                    // });
+                } else {
+                    // if (error.response.status === 401) {
+                    //     Router.push("/security/sign-in");
+                    //     return {}
+                    // }
+                    // Modal.error({
+                    //     title: error.response.data.error_title,
+                    //     content: error.response.data.error_message,
+                    // });
+                }
+            }
+
+        } catch (error) {
+            console.log(error.error_message)
+            console.log(error)
+            // Modal.error({
+            //     title: error.error_title,
+            //     content: error.error_message,
+            // });
+        }
+    }
 
 
     const router = useRouter()
     const [showToastWelcome, setShowToastWelcome] = useState(true);
     const [bannerId, setBannerId] = useState(null)
     const [bannerImageFilename, setBannerImageFilename] = useState(null)
+    const [categoryProducts, setCategoryProducts] = useState([])
     const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : null);
     console.log("props Home page:"); console.log(cookiesData);
 
@@ -181,7 +240,7 @@ function Home(props) {
                                             <ul className="about-list right-nav-about">
 
                                                 <li className="right-nav-list">
-                                                    <Link href={'/dashboard'}>
+                                                    <Link href={'/dashboard/profile'}>
                                                         <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
                                                             <span>Dapatkan Saldo Bonus</span>
                                                         </button>
@@ -419,70 +478,58 @@ function Home(props) {
                 }
 
 
-                <div class="top-nav top-header sticky-header">
-                    <div class="container-fluid-lg">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="navbar-top">
-                                    <button class="navbar-toggler d-xl-none d-inline navbar-menu-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
-                                        <span class="navbar-toggler-icon">
-                                            <i class="fa-solid fa-bars"></i>
+                <div className="top-nav top-header sticky-header">
+                    <div className="container-fluid-lg">
+                        <div className="row">
+                            <div className="col-12">
+                                <div className="navbar-top">
+                                    <button className="navbar-toggler d-xl-none d-inline navbar-menu-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
+                                        <span className="navbar-toggler-icon">
+                                            <i className="fa-solid fa-bars"></i>
                                         </span>
                                     </button>
-                                    <Link href="/" class="web-logo nav-logo">
+                                    <Link href="/" className="web-logo nav-logo">
                                         <img src="/images/ditokoku.png" className="img-fluid blur-up lazyloaded" alt="" />
                                     </Link>
 
-                                    <div class="header-nav-middle">
-                                        <div class="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
-                                            <div class="offcanvas offcanvas-collapse order-xl-2" id="primaryMenu">
-                                                <div class="offcanvas-header navbar-shadow">
+                                    <div className="header-nav-middle">
+                                        <div className="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
+                                            <div className="offcanvas offcanvas-collapse order-xl-2" id="primaryMenu">
+                                                <div className="offcanvas-header navbar-shadow">
                                                     <h5>Menu</h5>
-                                                    <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                                    <button className="btn-close lead" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                                                 </div>
-                                                <div class="offcanvas-body">
-                                                    <ul class="navbar-nav">
+                                                <div className="offcanvas-body">
+                                                    <ul className="navbar-nav">
 
-                                                        <li class="nav-item dropdown">
-                                                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown">Kategori</a>
+                                                        <li className="nav-item dropdown">
+                                                            <a className="nav-link dropdown-toggle" href="#javascript" data-bs-toggle="dropdown">Kategori</a>
 
-                                                            <ul class="dropdown-menu">
-                                                                <li>
-                                                                    <a class="dropdown-item" href="index.html">Kartshop</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item" href="index-2.html">Sweetshop</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item" href="index-3.html">Organic</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item" href="index-4.html">Supershop</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item" href="index-5.html">Classic shop</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item" href="index-6.html">Furniture</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item" href="index-7.html">Search Oriented</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item" href="index-8.html">Category Focus</a>
-                                                                </li>
-                                                                <li>
-                                                                    <a class="dropdown-item" href="index-9.html">Fashion</a>
-                                                                </li>
+                                                            <ul className="dropdown-menu">
+                                                                {(categoryProducts.length > 0 ? categoryProducts.map(data=>{
+                                                                    return(
+                                                                        <li>
+                                                                            <a className="dropdown-item" href="#javascript">{data.category_product_name}</a>
+                                                                        </li>
+                                                                    )
+                                                                })
+                                                                :
+                                                                    <li>
+                                                                        <a className="dropdown-item" href="#javascript">Data Tidak Tersedia</a>
+                                                                    </li>
+                                                                )
+
+                                                                }
+                                                                
                                                             </ul>
                                                         </li>
 
                                                         <li className="nav-item">
-                                                            <div class="search-box">
-                                                                <div class="input-group" style={{ width: '200px', marginRight: '200px' }}>
-                                                                    <input type="search" class="form-control" placeholder="Cari ditokoku...." aria-label="Recipient's username" aria-describedby="button-addon2" />
-                                                                    {/* <button class="btn search-button-2" type="button" id="button-addon2">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                            <div className="search-box">
+                                                                <div className="input-group" style={{ width: '200px', marginRight: '200px' }}>
+                                                                    <input type="search" className="form-control" placeholder="Cari ditokoku...." aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                                                    {/* <button className="btn search-button-2" type="button" id="button-addon2">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                                                 </button> */}
                                                                 </div>
                                                             </div>
@@ -499,38 +546,38 @@ function Home(props) {
                                         </div>
                                     </div>
                                     {props.status_code === 200 ?
-                                        <div class="rightside-box">
-                                            {/* <div class="search-full">
-                                    <div class="input-group">
-                                        <span class="input-group-text">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search font-light"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        <div className="rightside-box">
+                                            {/* <div className="search-full">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search font-light"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                         </span>
-                                        <input type="text" class="form-control search-type" placeholder="Search here.."/>
-                                        <span class="input-group-text close-search">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x font-light"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        <input type="text" className="form-control search-type" placeholder="Search here.."/>
+                                        <span className="input-group-text close-search">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x font-light"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                         </span>
                                     </div>
                                 </div> */}
-                                            <ul class="right-side-menu">
-                                                {/* <li class="right-side">
-                                        <div class="delivery-login-box">
-                                            <div class="delivery-icon">
-                                                <div class="search-box">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                            <ul className="right-side-menu">
+                                                {/* <li className="right-side">
+                                        <div className="delivery-login-box">
+                                            <div className="delivery-icon">
+                                                <div className="search-box">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                                                 </div>
                                             </div>
                                         </div>
                                     </li> */}
-                                                <li class="right-side">
-                                                    {/* <a href="wishlist.html" class="btn p-0 position-relative header-wishlist">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                                <li className="right-side">
+                                                    {/* <a href="wishlist.html" className="btn p-0 position-relative header-wishlist">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
                                         </a> */}
                                                 </li>
-                                                <li class="right-side">
-                                                    <button type="button" class="btn p-0 position-relative header-wishlist">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                                                        <span class="position-absolute top-0 start-100 translate-middle badge">2
-                                                            <span class="visually-hidden">unread messages</span>
+                                                <li className="right-side">
+                                                    <button type="button" className="btn p-0 position-relative header-wishlist">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                                        <span className="position-absolute top-0 start-100 translate-middle badge">2
+                                                            <span className="visually-hidden">unread messages</span>
                                                         </span>
                                                     </button>
                                                 </li>
@@ -548,22 +595,18 @@ function Home(props) {
 
                                                     <div className="onhover-div onhover-div-login">
                                                         <ul className="user-box-name">
-                                                            <Link href={'/dashboard'}>
-                                                                <li className="product-box-contain">
-                                                                    <a href='#javascript'>
-                                                                        Profil
-                                                                    </a>
-                                                                </li>
-                                                            </Link>
+                                                            <li className="product-box-contain">
+                                                                <Link href={'/dashboard/profile'}>
+                                                                    Profil
+                                                                </Link>
+                                                            </li>
                                                         </ul>
                                                         <ul className="user-box-name">
-                                                            <Link href={'/dashboard/topup'}>
-                                                                <li className="product-box-contain">
-                                                                    <a href='#javascript'>
-                                                                        Top Up Saldo
-                                                                    </a>
-                                                                </li>
-                                                            </Link>
+                                                            <li className="product-box-contain">
+                                                                <Link href={'/dashboard/topup'}>
+                                                                    Top Up Saldo
+                                                                </Link>
+                                                            </li>
                                                         </ul>
                                                         <ul className="user-box-name">
                                                             <li className="product-box-contain">
@@ -631,12 +674,12 @@ function Home(props) {
 
             {/* banner menu */}
             <div className="container-fluid p-0">
-                <div class="header-row" id="header-row" style={{ padding: '0px', overflow: 'hidden', height: '100%' }}>
+                <div className="header-row" id="header-row" style={{ padding: '0px', overflow: 'hidden', height: '100%' }}>
 
-                    <div class="container-fluid" style={{ padding: '0px' }}>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <a class="navbar-brand logo" href="index.html">
+                    <div className="container-fluid" style={{ padding: '0px' }}>
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <a className="navbar-brand logo" href="index.html">
                                 <img src={process.env.REACT_APP_DITOKOKU_API_BASE_URL +'/assets/images/banner/'+bannerImageFilename} alt="banner image" style={{ width: '100%' }} crossOrigin='anonymous'/>
                                    
                                 </a>
@@ -1374,7 +1417,6 @@ function Home(props) {
 // Get Server Side Props
 export async function getServerSideProps({ req, res }) {
     console.log("getcookie home page");
-    getCookie('reseller_cookies', { req, res })
     if (!getCookie('reseller_cookies', { req, res })) {
         return {
             props: {

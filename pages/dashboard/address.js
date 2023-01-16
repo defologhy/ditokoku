@@ -1,8 +1,9 @@
 import Link from 'next/link'
 import Router, { useRouter } from 'next/router';
 import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from 'next/head';
+import axios from 'axios'
 
 function Address(props) {
     const router = useRouter()
@@ -10,6 +11,7 @@ function Address(props) {
     console.log("props address page:"); console.log(props);
     
     const [showToastWelcome, setShowToastWelcome] = useState(true);
+    const [categoryProducts, setCategoryProducts] = useState([])
     const cookiesData = JSON.parse(props.cookies_data);
 
     if (process.browser){
@@ -17,6 +19,68 @@ function Address(props) {
             router.push('/auth/login')
         }
     }
+
+    useEffect(() => {
+        getCategoryProducts();
+    }, []);
+    const getCategoryProducts = async () => {
+        await getDataCategoryProducts();
+    }
+    const getDataCategoryProducts = async () => {
+        try {
+
+            //Set Axios Configuration For Sign In to NextJS Server
+            const axiosConfigForGetData = {
+                url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + '/category-products'
+                , method: "GET"
+                , timeout: 40000
+                , responseType: "json"
+                , responseEncoding: "utf8"
+                , headers: { "Content-Type": "application/json" }
+            };
+
+            //Execute Axios Configuration For JsonContentValidation
+            try {
+                const getDataResults = await axios.request(axiosConfigForGetData);
+                const getData = getDataResults.data;
+                console.log("getDataCategoryProducts", getData)
+                
+                setCategoryProducts((getData.data.length!=0 ? getData.data : []))
+
+                // form.setFieldsValue({
+                //     bannerId : (getData.data.length!=0 ? getData.data[0].banner_id : '')
+                //     , imageConstruct: (getData.data.length!=0 ? getData.data[0].banner_filename : '')
+                //     , descriptionConstruct: (getData.data.length!=0 ? getData.data[0].banner_description : '')/
+                // });
+            } catch (error) {
+                console.log(error)
+                if (error.response == null) {
+                    // Modal.error({
+                    //     title: "Internal Server Error",
+                    //     content: "Error On Get Data SKU Plant Storage Location. (Please contact you system administrator and report this error message)",
+                    // });
+                } else {
+                    // if (error.response.status === 401) {
+                    //     Router.push("/security/sign-in");
+                    //     return {}
+                    // }
+                    // Modal.error({
+                    //     title: error.response.data.error_title,
+                    //     content: error.response.data.error_message,
+                    // });
+                }
+            }
+
+        } catch (error) {
+            console.log(error.error_message)
+            console.log(error)
+            // Modal.error({
+            //     title: error.error_title,
+            //     content: error.error_message,
+            // });
+        }
+    }
+
 
     const handleSignOut = async () => {
         deleteCookie('reseller_cookies')
@@ -31,116 +95,332 @@ function Address(props) {
             </Head>
             {/* header fix menu start */}
             <header>
-                {/* <div className="header-top">
-    <div className="container-fluid-lg">
-        <div className="row">
-            <div className="col-xxl-3 d-xxl-block d-none">
-                <div className="top-left-header">
-                    <i className="iconly-Location icli text-white"></i>
-                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
-                </div>
-            </div>
 
-            <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
-                <div className="header-offer">
-                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
-                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6>Something you love is now on sale!
-                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                        !</a>
-                                </h6>
-                            </div>
-                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                    </strong>
+                {
+                    props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
+                        <div>
+                            <div className="header-top bg-dark">
+                                <div className="container-fluid-lg">
+                                    <div className="row">
+                                        {/* <div className="col-xxl-3 d-xxl-block d-none">
+                                <div className="top-left-header">
+                                    <i className="iconly-Location icli text-white"></i>
+                                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                                </div>
+                            </div> */}
 
-                                </h6>
-                            </div>
-                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6>Something you love is now on sale!
-                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                        !</a>
-                                </h6>
-                            </div>
-                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                    </strong>
+                                        {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                                <div className="header-offer">
+                                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
+                                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
 
-                                </h6>
-                            </div>
-                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                            <div className="timer-notification">
-                                <h6>Something you love is now on sale!
-                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                        !</a>
-                                </h6>
-                            </div>
-                        </div></div></div>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
 
-                        
-                    </div>
-                </div>
-            </div>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div></div></div>
 
-            <div className="col-lg-3">
-                <ul className="about-list right-nav-about">
-                    <li className="right-nav-list">
-                        <div className="dropdown theme-form-select">
-                            <button className="btn dropdown-toggle" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="/images/country/united-states.png" className="img-fluid blur-up lazyloaded" alt="" />
-                                <span>English</span>
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="select-language">
-                                <li>
-                                    <a className="dropdown-item" href="!#" id="english">
-                                        <img src="/images/country/united-kingdom.png" className="img-fluid blur-up lazyload" alt="" />
-                                        <span>English</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="!#" id="france">
-                                        <img src="/images/country/germany.png" className="img-fluid blur-up lazyload" alt="" />
-                                        <span>Germany</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="!#" id="chinese">
-                                        <img src="/images/country/turkish.png" className="img-fluid blur-up lazyload" alt="" />
-                                        <span>Turki</span>
-                                    </a>
-                                </li>
-                            </ul>
+                                        
+                                    </div>
+                                </div>
+                            </div> */}
+
+                                        <div className="col-lg-2">
+                                            <ul className="about-list right-nav-about">
+                                                <li className="right-nav-list">
+                                                    {/* <Link href={'/auth/signup'}> */}
+                                                    <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                        <span>Download</span>
+                                                    </button>
+                                                    {/* </Link> */}
+                                                </li>
+                                                <li className="right-nav-list">
+                                                    {/* <Link href={'/auth/login'}> */}
+                                                    <div className="dropdown theme-form-select">
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Ikuti Kami Di </span>
+                                                        </button>
+                                                    </div>
+                                                    {/* </Link> */}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div className="col-lg-3">
+
+                                        </div>
+
+                                        <div className="col-lg-6">
+                                            <ul className="about-list right-nav-about">
+
+                                                <li className="right-nav-list">
+                                                    <Link href={'/dashboard/profile'}>
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Dapatkan Saldo Bonus</span>
+                                                        </button>
+                                                    </Link>
+
+                                                </li>
+
+
+                                                <li className="right-nav-list">
+                                                    <div className="dropdown theme-form-select">
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }} onClick={handleSignOut}>
+                                                            <span>Logout</span>
+                                                        </button>
+                                                    </div>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </li>
-                    <li className="right-nav-list">
-                        <div className="dropdown theme-form-select">
-                            <button className="btn dropdown-toggle" type="button" id="select-dollar" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span>USD</span>
-                            </button>
-                            <ul className="dropdown-menu dropdown-menu-end sm-dropdown-menu" aria-labelledby="select-dollar">
-                                <li>
-                                    <a className="dropdown-item" id="aud" href="!#">AUD</a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" id="eur" href="!#">EUR</a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" id="cny" href="!#">CNY</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div> */}
+                        : props.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
+                            <div>
+                                <div className="header-top bg-dark">
+                                    <div className="container-fluid-lg">
+                                        <div className="row">
+                                            {/* <div className="col-xxl-3 d-xxl-block d-none">
+                                <div className="top-left-header">
+                                    <i className="iconly-Location icli text-white"></i>
+                                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                                </div>
+                            </div> */}
+
+                                            {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                                <div className="header-offer">
+                                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
+                                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
+
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
+
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div></div></div>
+
+                                        
+                                    </div>
+                                </div>
+                            </div> */}
+
+                                            <div className="col-lg-2">
+                                                <ul className="about-list right-nav-about">
+                                                    <li className="right-nav-list">
+                                                        {/* <Link href={'/auth/signup'}> */}
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Download</span>
+                                                        </button>
+                                                        {/* </Link> */}
+                                                    </li>
+                                                    <li className="right-nav-list">
+                                                        <Link href={'/auth/login'}>
+                                                            <div className="dropdown theme-form-select">
+                                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                    <span>Ikuti Kami Di </span>
+                                                                </button>
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className="col-lg-3">
+
+                                            </div>
+
+                                            <div className="col-lg-6">
+                                                <ul className="about-list right-nav-about">
+                                                    <li className="right-nav-list">
+                                                        <div className="dropdown theme-form-select">
+                                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                <span>{cookiesData.reseller_full_name}</span>
+                                                            </button>
+                                                        </div>
+                                                    </li>
+                                                    {/* <li className="right-nav-list">
+                                        <div className="dropdown theme-form-select">
+                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
+                                                <span>Logout</span>
+                                            </button>
+                                        </div>
+                                    </li> */}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            :
+                            <div>
+                                <div className="header-top bg-dark">
+                                    <div className="container-fluid-lg">
+                                        <div className="row">
+                                            {/* <div className="col-xxl-3 d-xxl-block d-none">
+                                <div className="top-left-header">
+                                    <i className="iconly-Location icli text-white"></i>
+                                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                                </div>
+                            </div>
+
+                            <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                                <div className="header-offer">
+                                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
+                                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
+
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                                    </strong>
+
+                                                </h6>
+                                            </div>
+                                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                            <div className="timer-notification">
+                                                <h6>Something you love is now on sale!
+                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                        !</a>
+                                                </h6>
+                                            </div>
+                                        </div></div></div>
+
+                                        
+                                    </div>
+                                </div>
+                            </div> */}
+
+                                            <div className="col-lg-2">
+                                                <ul className="about-list right-nav-about">
+                                                    <li className="right-nav-list">
+                                                        {/* <Link href={'/auth/signup'}> */}
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Download</span>
+                                                        </button>
+                                                        {/* </Link> */}
+                                                    </li>
+                                                    <li className="right-nav-list">
+                                                        <Link href={'/auth/login'}>
+                                                            <div className="dropdown theme-form-select">
+                                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                    <span>Ikuti Kami Di </span>
+                                                                </button>
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className="col-lg-3">
+
+                                            </div>
+                                            <div className="col-lg-6">
+                                                <ul className="about-list right-nav-about">
+                                                    <li className="right-nav-list">
+                                                        <Link href={'/auth/signup'}>
+                                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                <span>Daftar Reseller</span>
+                                                            </button>
+                                                        </Link>
+                                                    </li>
+                                                    <li className="right-nav-list">
+                                                        <Link href={'/auth/login'}>
+                                                            <div className="dropdown theme-form-select">
+                                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                                    <span>Login Reseller</span>
+                                                                </button>
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                }
+
 
                 <div className="top-nav top-header sticky-header">
                     <div className="container-fluid-lg">
@@ -152,9 +432,9 @@ function Address(props) {
                                             <i className="fa-solid fa-bars"></i>
                                         </span>
                                     </button>
-                                    <a href="!#" className="web-logo nav-logo">
+                                    <Link href="/" className="web-logo nav-logo">
                                         <img src="/images/ditokoku.png" className="img-fluid blur-up lazyloaded" alt="" />
-                                    </a>
+                                    </Link>
 
                                     <div className="header-nav-middle">
                                         <div className="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
@@ -166,305 +446,127 @@ function Address(props) {
                                                 <div className="offcanvas-body">
                                                     <ul className="navbar-nav">
 
+                                                        <li className="nav-item dropdown">
+                                                            <a className="nav-link dropdown-toggle" href="#javascript" data-bs-toggle="dropdown">Kategori</a>
+
+                                                            <ul className="dropdown-menu">
+                                                                {(categoryProducts.length > 0 ? categoryProducts.map(data=>{
+                                                                    return(
+                                                                        <li>
+                                                                            <a className="dropdown-item" href="#javascript">{data.category_product_name}</a>
+                                                                        </li>
+                                                                    )
+                                                                })
+                                                                :
+                                                                    <li>
+                                                                        <a className="dropdown-item" href="#javascript">Data Tidak Tersedia</a>
+                                                                    </li>
+                                                                )
+
+                                                                }
+                                                                
+                                                            </ul>
+                                                        </li>
+
                                                         <li className="nav-item">
-                                                            <Link className='btn btn-hover-blue dropdown' href={'/'}>
-                                                                Beranda
-                                                            </Link>
+                                                            <div className="search-box">
+                                                                <div className="input-group" style={{ width: '200px', marginRight: '200px' }}>
+                                                                    <input type="search" className="form-control" placeholder="Cari ditokoku...." aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                                                    {/* <button className="btn search-button-2" type="button" id="button-addon2">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                                </button> */}
+                                                                </div>
+                                                            </div>
+
                                                         </li>
 
                                                         <li className="">
-                                                            <Link className='btn btn-hover-blue dropdown' href={'#'}>
-                                                                Kategori
-                                                            </Link>
+                                                            Saldo Bonus: Rp. {(cookiesData ? cookiesData.balance_bonus_amount : 0)} <br />
+                                                            Saldo Regular: Rp. {(cookiesData ? cookiesData.balance_regular_amount : 0)}
                                                         </li>
-
-                                                        <li className="">
-                                                            <Link className='btn btn-hover-blue dropdown' href={'#'}>
-                                                                Produk
-                                                            </Link>
-                                                        </li>
-
-                                                        <li className="">
-                                                            <Link className='btn btn-hover-blue dropdown' href={'/dashboard'}>
-                                                                Profil
-                                                            </Link>
-                                                        </li>
-
-                                                        {/* <li className="nav-item dropdown">
-                                            <a className="nav-link dropdown-toggle" href="!#" data-bs-toggle="dropdown">Blog</a>
-                                            <ul className="dropdown-menu">
-                                                <li>
-                                                    <a className="dropdown-item" href="blog-detail.html">Blog Detail</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="blog-grid.html">Blog Grid</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="blog-list.html">Blog List</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-
-                                        <li className="nav-item dropdown new-nav-item">
-                                            <label className="new-dropdown">New</label>
-                                            <a className="nav-link dropdown-toggle" href="!#" data-bs-toggle="dropdown">Pages</a>
-                                            <ul className="dropdown-menu">
-                                                <li className="sub-dropdown-hover">
-                                                    <a className="dropdown-item" href="!#">Email
-                                                        Template <span className="new-text"><i className="fa-solid fa-bolt-lightning"></i></span></a>
-                                                    <ul className="sub-menu">
-                                                        <li>
-                                                            <a href="https://themes.pixelstrap.com/fastkart/assets/email-templete/abandonment-email.html">Abandonment</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://themes.pixelstrap.com/fastkart/assets/email-templete/offer-template.html">Offer
-                                                                Template</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://themes.pixelstrap.com/fastkart/assets/email-templete/order-success.html">Order
-                                                                Success</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://themes.pixelstrap.com/fastkart/assets/email-templete/reset-password.html">Reset
-                                                                Password</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="https://themes.pixelstrap.com/fastkart/assets/email-templete/welcome.html">Welcome
-                                                                template</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li className="sub-dropdown-hover">
-                                                    <a className="dropdown-item" href="!#">Invoice
-                                                        Template <span className="new-text"><i className="fa-solid fa-bolt-lightning"></i></span></a>
-                                                    <ul className="sub-menu">
-                                                        <li>
-                                                            <a href="https://themes.pixelstrap.com/fastkart/assets/invoice/invoice-1.html">Invoice 1</a>
-                                                        </li>
-
-                                                        <li>
-                                                            <a href="https://themes.pixelstrap.com/fastkart/assets/invoice/invoice-2.html">Invoice 2</a>
-                                                        </li>
-
-                                                        <li>
-                                                            <a href="https://themes.pixelstrap.com/fastkart/assets/invoice/invoice-3.html">Invoice 3</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="404.html">404</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="about-us.html">About Us</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="cart.html">Cart</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="contact-us.html">Contact</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="checkout.html">Checkout</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="coming-soon.html">Coming Soon</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="!#">Compare</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="faq.html">Faq</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="order-success.html">Order
-                                                        Success</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="order-tracking.html">Order
-                                                        Tracking</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="otp.html">OTP</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="search.html">Search</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="user-dashboard.html">User
-                                                        Dashboard</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="!#">Wishlist</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-
-                                        <li className="nav-item dropdown">
-                                            <a className="nav-link dropdown-toggle" href="!#" data-bs-toggle="dropdown">Seller</a>
-                                            <ul className="dropdown-menu">
-                                                <li>
-                                                    <a className="dropdown-item" href="seller-become.html">Become a
-                                                        Seller</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="seller-dashboard.html">Seller
-                                                        Dashboard</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="seller-detail.html">Seller
-                                                        Detail</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="seller-detail-2.html">Seller
-                                                        Detail 2</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="seller-grid.html">Seller Grid</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" href="seller-grid-2.html">Seller Grid
-                                                        2</a>
-                                                </li>
-                                            </ul>
-                                        </li> */}
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div className="rightside-box">
-                                        <div className="search-full">
-                                            <div className="input-group">
-                                                <span className="input-group-text">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search font-light"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                                </span>
-                                                <input type="text" className="form-control search-type" placeholder="Search here.." />
-                                                <span className="input-group-text close-search">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x font-light"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                                </span>
+                                    {props.status_code === 200 ?
+                                        <div className="rightside-box">
+                                            {/* <div className="search-full">
+                                    <div className="input-group">
+                                        <span className="input-group-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search font-light"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        </span>
+                                        <input type="text" className="form-control search-type" placeholder="Search here.."/>
+                                        <span className="input-group-text close-search">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x font-light"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        </span>
+                                    </div>
+                                </div> */}
+                                            <ul className="right-side-menu">
+                                                {/* <li className="right-side">
+                                        <div className="delivery-login-box">
+                                            <div className="delivery-icon">
+                                                <div className="search-box">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                </div>
                                             </div>
                                         </div>
-                                        <ul className="right-side-menu">
-                                            {/* <li className="right-side">
-                                                <div className="delivery-login-box">
-                                                    <div className="delivery-icon">
-                                                        <div className="search-box">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li> */}
-                                            {/* <li className="right-side">
-                                                <a href="!#" className="btn p-0 position-relative header-wishlist">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                                                </a>
-                                            </li> */}
-                                            <li className="right-side">
-                                                <div className="onhover-dropdown header-badge">
+                                    </li> */}
+                                                <li className="right-side">
+                                                    {/* <a href="wishlist.html" className="btn p-0 position-relative header-wishlist">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                        </a> */}
+                                                </li>
+                                                <li className="right-side">
                                                     <button type="button" className="btn p-0 position-relative header-wishlist">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                                                         <span className="position-absolute top-0 start-100 translate-middle badge">2
                                                             <span className="visually-hidden">unread messages</span>
                                                         </span>
                                                     </button>
+                                                </li>
 
-                                                    <div className="onhover-div">
-                                                        <ul className="cart-list">
+                                                <li className="right-side onhover-dropdown">
+                                                    <div className="delivery-login-box">
+                                                        <div className="delivery-icon">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                                        </div>
+                                                        <div className="delivery-detail">
+                                                            <h6>Hello,</h6>
+                                                            <h5>My Account</h5>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="onhover-div onhover-div-login">
+                                                        <ul className="user-box-name">
                                                             <li className="product-box-contain">
-                                                                <div className="drop-cart">
-                                                                    <a href="!#" className="drop-image">
-                                                                        <img src="/images/vegetable/product/1.png" className="blur-up lazyloaded" alt="" />
-                                                                    </a>
-
-                                                                    <div className="drop-contain">
-                                                                        <a href="!#">
-                                                                            <h5>Fantasy Crunchy Choco Chip Cookies</h5>
-                                                                        </a>
-                                                                        <h6><span>1 x</span> $80.58</h6>
-                                                                        <button className="close-button close_button">
-                                                                            <i className="fa-solid fa-xmark"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-
-                                                            <li className="product-box-contain">
-                                                                <div className="drop-cart">
-                                                                    <a href="!#" className="drop-image">
-                                                                        <img src="/images/vegetable/product/2.png" className="blur-up lazyloaded" alt="" />
-                                                                    </a>
-
-                                                                    <div className="drop-contain">
-                                                                        <a href="!#">
-                                                                            <h5>Peanut Butter Bite Premium Butter Cookies 600 g
-                                                                            </h5>
-                                                                        </a>
-                                                                        <h6><span>1 x</span> $25.68</h6>
-                                                                        <button className="close-button close_button">
-                                                                            <i className="fa-solid fa-xmark"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
+                                                                <Link href={'/dashboard/profile'}>
+                                                                    Profil
+                                                                </Link>
                                                             </li>
                                                         </ul>
-
-                                                        <div className="price-box">
-                                                            <h5>Total :</h5>
-                                                            <h4 className="theme-color fw-bold">$106.58</h4>
-                                                        </div>
-
-                                                        <div className="button-group">
-                                                            <a href="cart.html" className="btn btn-sm cart-button">View Cart</a>
-                                                            <a href="checkout.html" className="btn btn-sm cart-button theme-bg-color
-                                            text-white">Checkout</a>
-                                                        </div>
+                                                        <ul className="user-box-name">
+                                                            <li className="product-box-contain">
+                                                                <Link href={'/dashboard/topup-balance-regular'}>
+                                                                    Top Up Saldo
+                                                                </Link>
+                                                            </li>
+                                                        </ul>
+                                                        <ul className="user-box-name">
+                                                            <li className="product-box-contain">
+                                                                <a href='#javascript' onClick={handleSignOut}>
+                                                                    Keluar
+                                                                </a>
+                                                            </li>
+                                                        </ul>
                                                     </div>
-                                                </div>
-                                            </li>
-                                            <li className="right-side onhover-dropdown">
-                                                <div className="delivery-login-box">
-                                                    <div className="delivery-icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                                    </div>
-                                                    <div className="delivery-detail">
-                                                        <h6>Hello,</h6>
-                                                        <h5>My Account</h5>
-                                                    </div>
-                                                </div>
+                                                </li>
 
-                                                <div className="onhover-div onhover-div-login">
-                                                    <ul className="user-box-name">
-                                                        {
-                                                            props.status_code === 401 ?
-                                                                <>
-                                                                    <li className="product-box-contain">
-                                                                        <Link href="/auth/login">Masuk</Link>
-                                                                    </li>
-
-                                                                    <li className="product-box-contain">
-                                                                        <Link href="/auth/signup">Daftar</Link>
-                                                                    </li>
-                                                                </>
-                                                                :
-
-                                                                <>
-
-                                                                    <li className="product-box-contain">
-                                                                        <a href='javascript:void(0)' onClick={handleSignOut}>
-                                                                            Keluar
-                                                                        </a>
-                                                                    </li>
-                                                                </>
-
-                                                        }
-
-
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                            </ul>
+                                        </div>
+                                        :
+                                        <div></div>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -533,13 +635,13 @@ function Address(props) {
                             <div className="profile-contain">
                                 <div className="profile-image">
                                     <div className="position-relative">
-                                        <img src="/images/inner-page/user/avatar.png" className="blur-up update_img lazyloaded" alt="" />
-                                        {/* <div className="cover-icon">
-                                            <i className="fa-solid fa-pen">
-                                                <input type="file" onchange="readURL(this,0)" />
-                                            </i>
-                                        </div> */}
-                                    </div>
+                                            <img crossorigin="anonymous" src={(cookiesData.reseller_image_filename!==null ? process.env.REACT_APP_DITOKOKU_API_BASE_URL + '/assets/images/profil/reseller/' +cookiesData.reseller_image_filename : '/images/inner-page/user/avatar.png')} className="blur-up update_img lazyloaded" alt="" />
+                                            {/* <div className="cover-icon">
+                                                <i className="fa-solid fa-pen">
+                                                    <input type="file" onchange="readURL(this,0)" />
+                                                </i>
+                                            </div> */}
+                                        </div>
                                 </div>
 
                                 <div className="profile-name">
@@ -550,26 +652,33 @@ function Address(props) {
                         </div>
 
                         <ul className="nav nav-pills user-nav-pills" id="pills-tab" role="tablist">
-                                    <li className="nav-item" role="presentation">
-                                        <Link href={'/dashboard/address'}>
-                                            <button className="nav-link active" id="pills-address-tab" data-bs-toggle="pill" data-bs-target="#pills-address" type="button" role="tab" aria-controls="pills-address" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                                Alamat</button>
-                                        </Link>
-                                    </li>
+                                <li className="nav-item" role="presentation">
+                                    <Link href={'/dashboard/address'}>
+                                        <button className="nav-link active" id="pills-address-tab" data-bs-toggle="pill" data-bs-target="#pills-address" type="button" role="tab" aria-controls="pills-address" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-map-pin"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                            Alamat</button>
+                                    </Link>
+                                </li>
 
-                                    <li className="nav-item" role="presentation">
-                                        <Link href={'/dashboard'}>
-                                            <button className="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <li className="nav-item" role="presentation">
+                                    <Link href={'/dashboard/profile'}>
+                                        <button className="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                             Profil</button>
-                                        </Link>
-                                    </li>
+                                    </Link>
+                                </li>
 
-                                    <li class="nav-item" role="presentation">
-                                        <Link href={'/dashboard/topup'}>
-                                        <button class="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                                            Top Up</button>
-                                        </Link>
-                                    </li>
+                                <li class="nav-item" role="presentation">
+                                    <Link href={'/dashboard/bank-accounts'}>
+                                    <button class="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                        Akun Bank</button>
+                                    </Link>
+                                </li>
+
+                                <li class="nav-item" role="presentation">
+                                    <Link href={'/dashboard/topup-balance-regular'}>
+                                    <button class="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                        Top Up Saldo Regular</button>
+                                    </Link>
+                                </li>
 
                                     {/* <li className="nav-item" role="presentation">
                                 <button className="nav-link" id="pills-dashboard-tab" data-bs-toggle="pill" data-bs-target="#pills-dashboard" type="button" role="tab" aria-controls="pills-dashboard" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
