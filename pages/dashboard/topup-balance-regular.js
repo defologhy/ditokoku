@@ -564,9 +564,9 @@ function TopUpBalanceRegular(props) {
                                                             <a className="nav-link dropdown-toggle" href="#javascript" data-bs-toggle="dropdown">Kategori</a>
 
                                                             <ul className="dropdown-menu">
-                                                                {(categoryProducts.length > 0 ? categoryProducts.map(data=>{
+                                                                {(categoryProducts.length > 0 ? categoryProducts.map((data, index) => {
                                                                     return(
-                                                                        <li>
+                                                                        <li key={index}>
                                                                             <a className="dropdown-item" href="#javascript">{data.category_product_name}</a>
                                                                         </li>
                                                                     )

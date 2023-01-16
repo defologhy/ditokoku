@@ -300,494 +300,487 @@ function Profil(props) {
                 </Modal.Footer>
             </Modal> : null}
 
-            {/* header fix menu start */}
-            <header>
+        {/* header fix menu start */}
+        <header>
 
-            {
-                props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
-                    <div>
-                        <div className="header-top bg-dark">
-                    <div className="container-fluid-lg">
-                        <div className="row">
-                            {/* <div className="col-xxl-3 d-xxl-block d-none">
-                                <div className="top-left-header">
-                                    <i className="iconly-Location icli text-white"></i>
-                                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
-                                </div>
-                            </div> */}
+        {
+            props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
+                <div>
+                    <div className="header-top bg-dark">
+                        <div className="container-fluid-lg">
+                            <div className="row">
+                                {/* <div className="col-xxl-3 d-xxl-block d-none">
+                        <div className="top-left-header">
+                            <i className="iconly-Location icli text-white"></i>
+                            <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                        </div>
+                    </div> */}
 
-                            {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
-                                <div className="header-offer">
-                                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
-                                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6>Something you love is now on sale!
-                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                                        !</a>
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                                    </strong>
-
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6>Something you love is now on sale!
-                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                                        !</a>
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                                    </strong>
-
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6>Something you love is now on sale!
-                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                                        !</a>
-                                                </h6>
-                                            </div>
-                                        </div></div></div>
-
-                                        
+                                {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                        <div className="header-offer">
+                            <div className="notification-slider slick-initialized slick-slider slick-vertical">
+                                <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                    <div className="timer-notification">
+                                        <h6>Something you love is now on sale!
+                                            <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                !</a>
+                                        </h6>
                                     </div>
-                                </div>
-                            </div> */}
+                                </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
+                                    <div className="timer-notification">
+                                        <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                            every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                            </strong>
 
-                            <div className="col-lg-2">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        {/* <Link href={'/auth/signup'}> */}
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
+                                        </h6>
+                                    </div>
+                                </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                    <div className="timer-notification">
+                                        <h6>Something you love is now on sale!
+                                            <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                !</a>
+                                        </h6>
+                                    </div>
+                                </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                    <div className="timer-notification">
+                                        <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                            every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                            </strong>
+
+                                        </h6>
+                                    </div>
+                                </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                    <div className="timer-notification">
+                                        <h6>Something you love is now on sale!
+                                            <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                                !</a>
+                                        </h6>
+                                    </div>
+                                </div></div></div>
+
+                                
+                            </div>
+                        </div>
+                    </div> */}
+
+                                <div className="col-lg-2">
+                                    <ul className="about-list right-nav-about">
+                                        <li className="right-nav-list">
+                                            {/* <Link href={'/auth/signup'}> */}
+                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
                                                 <span>Download</span>
                                             </button>
-                                        {/* </Link> */}
-                                    </li>
-                                    <li className="right-nav-list">
-                                        {/* <Link href={'/auth/login'}> */}
+                                            {/* </Link> */}
+                                        </li>
+                                        <li className="right-nav-list">
+                                            {/* <Link href={'/auth/login'}> */}
                                             <div className="dropdown theme-form-select">
-                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
+                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
                                                     <span>Ikuti Kami Di </span>
                                                 </button>
                                             </div>
-                                        {/* </Link> */}
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-lg-3">
+                                            {/* </Link> */}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="col-lg-3">
 
-                            </div>
+                                </div>
 
-                            <div className="col-lg-6">
-                                <ul className="about-list right-nav-about">
-                                
-                                    <li className="right-nav-list">
-                                    <Link href={'/dashboard/profile'}>
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                <span>Dapatkan Saldo Bonus</span>
-                                            </button>
+                                <div className="col-lg-6">
+                                    <ul className="about-list right-nav-about">
+
+                                        <li className="right-nav-list">
+                                            <Link href={'/dashboard/profile'}>
+                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                    <span>Dapatkan Saldo Bonus</span>
+                                                </button>
                                             </Link>
 
-                                    </li>
-                                    
-                                    
-                                    <li className="right-nav-list">
-                                        <div className="dropdown theme-form-select">
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
-                                                <span>Logout</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    
-                                </ul>
+                                        </li>
+
+
+                                        <li className="right-nav-list">
+                                            <div className="dropdown theme-form-select">
+                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }} onClick={handleSignOut}>
+                                                    <span>Logout</span>
+                                                </button>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                    </div>
-                    :  props.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
-                    <div>
+            : props.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
+                <div>
                     <div className="header-top bg-dark">
-                    <div className="container-fluid-lg">
-                        <div className="row">
-                            {/* <div className="col-xxl-3 d-xxl-block d-none">
-                                <div className="top-left-header">
-                                    <i className="iconly-Location icli text-white"></i>
-                                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                        <div className="container-fluid-lg">
+                            <div className="row">
+                                {/* <div className="col-xxl-3 d-xxl-block d-none">
+                    <div className="top-left-header">
+                        <i className="iconly-Location icli text-white"></i>
+                        <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                    </div>
+                </div> */}
+
+                                {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                    <div className="header-offer">
+                        <div className="notification-slider slick-initialized slick-slider slick-vertical">
+                            <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6>Something you love is now on sale!
+                                        <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                            !</a>
+                                    </h6>
                                 </div>
-                            </div> */}
+                            </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                        every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                        </strong>
 
-                            {/* <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
-                                <div className="header-offer">
-                                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
-                                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6>Something you love is now on sale!
-                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                                        !</a>
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                                    </strong>
-
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6>Something you love is now on sale!
-                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                                        !</a>
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                                    </strong>
-
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6>Something you love is now on sale!
-                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                                        !</a>
-                                                </h6>
-                                            </div>
-                                        </div></div></div>
-
-                                        
-                                    </div>
+                                    </h6>
                                 </div>
-                            </div> */}
+                            </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6>Something you love is now on sale!
+                                        <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                            !</a>
+                                    </h6>
+                                </div>
+                            </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                        every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                        </strong>
 
-                        <div className="col-lg-2">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        {/* <Link href={'/auth/signup'}> */}
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
+                                    </h6>
+                                </div>
+                            </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6>Something you love is now on sale!
+                                        <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                            !</a>
+                                    </h6>
+                                </div>
+                            </div></div></div>
+
+                            
+                        </div>
+                    </div>
+                </div> */}
+
+                                <div className="col-lg-2">
+                                    <ul className="about-list right-nav-about">
+                                        <li className="right-nav-list">
+                                            {/* <Link href={'/auth/signup'}> */}
+                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
                                                 <span>Download</span>
                                             </button>
-                                        {/* </Link> */}
-                                    </li>
-                                    <li className="right-nav-list">
-                                        <Link href={'/auth/login'}>
+                                            {/* </Link> */}
+                                        </li>
+                                        <li className="right-nav-list">
+                                            <Link href={'/auth/login'}>
+                                                <div className="dropdown theme-form-select">
+                                                    <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                        <span>Ikuti Kami Di </span>
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="col-lg-3">
+
+                                </div>
+
+                                <div className="col-lg-6">
+                                    <ul className="about-list right-nav-about">
+                                        <li className="right-nav-list">
                                             <div className="dropdown theme-form-select">
-                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                    <span>Ikuti Kami Di </span>
+                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                    <span>{cookiesData.reseller_full_name}</span>
                                                 </button>
                                             </div>
-                                        </Link>
-                                    </li>
-                                </ul>
+                                        </li>
+                                        {/* <li className="right-nav-list">
+                            <div className="dropdown theme-form-select">
+                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
+                                    <span>Logout</span>
+                                </button>
                             </div>
-                            <div className="col-lg-3">
-
-                            </div>
-
-                            <div className="col-lg-6">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        <div className="dropdown theme-form-select">
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                <span>{cookiesData.reseller_full_name}</span>
-                                            </button>
-                                        </div>
-                                    </li>
-                                    {/* <li className="right-nav-list">
-                                        <div className="dropdown theme-form-select">
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}} onClick={handleSignOut}>
-                                                <span>Logout</span>
-                                            </button>
-                                        </div>
-                                    </li> */}
-                                </ul>
+                        </li> */}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                    </div>
-                    :
-                    <div>
+                :
+                <div>
                     <div className="header-top bg-dark">
-                    <div className="container-fluid-lg">
-                        <div className="row">
-                            {/* <div className="col-xxl-3 d-xxl-block d-none">
-                                <div className="top-left-header">
-                                    <i className="iconly-Location icli text-white"></i>
-                                    <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                        <div className="container-fluid-lg">
+                            <div className="row">
+                                {/* <div className="col-xxl-3 d-xxl-block d-none">
+                    <div className="top-left-header">
+                        <i className="iconly-Location icli text-white"></i>
+                        <span className="text-white">1418 Riverwood Drive, CA 96052, US</span>
+                    </div>
+                </div>
+
+                <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
+                    <div className="header-offer">
+                        <div className="notification-slider slick-initialized slick-slider slick-vertical">
+                            <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6>Something you love is now on sale!
+                                        <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                            !</a>
+                                    </h6>
                                 </div>
-                            </div>
+                            </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                        every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                        </strong>
 
-                            <div className="col-xxl-6 col-lg-9 d-lg-block d-none">
-                                <div className="header-offer">
-                                    <div className="notification-slider slick-initialized slick-slider slick-vertical">
-                                        <div className="slick-list draggable" style={{height: "0px"}}><div className="slick-track" style={{opacity: 1, height: '0px', transform: 'translate3d(0px, 0px, 0px)'}}><div className="slick-slide slick-cloned" data-slick-index="-1" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6>Something you love is now on sale!
-                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                                        !</a>
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" tabIndex="0" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                                    </strong>
-
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6>Something you love is now on sale!
-                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                                        !</a>
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
-                                                    every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
-                                                    </strong>
-
-                                                </h6>
-                                            </div>
-                                        </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
-                                            <div className="timer-notification">
-                                                <h6>Something you love is now on sale!
-                                                    <a href="!#" className="text-white" tabIndex="-1">Buy Now
-                                                        !</a>
-                                                </h6>
-                                            </div>
-                                        </div></div></div>
-
-                                        
-                                    </div>
+                                    </h6>
                                 </div>
-                            </div> */}
+                            </div><div className="slick-slide" data-slick-index="1" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6>Something you love is now on sale!
+                                        <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                            !</a>
+                                    </h6>
+                                </div>
+                            </div><div className="slick-slide slick-cloned" data-slick-index="2" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6><strong className="me-1">Welcome to Fastkart!</strong>Wrap new offers/gift
+                                        every signle day on Weekends.<strong className="ms-1">New Coupon Code: Fast024
+                                        </strong>
 
-                            <div className="col-lg-2">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        {/* <Link href={'/auth/signup'}> */}
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
+                                    </h6>
+                                </div>
+                            </div><div className="slick-slide slick-cloned" data-slick-index="3" id="" aria-hidden="true" tabIndex="-1" style={{width: '0px'}}>
+                                <div className="timer-notification">
+                                    <h6>Something you love is now on sale!
+                                        <a href="!#" className="text-white" tabIndex="-1">Buy Now
+                                            !</a>
+                                    </h6>
+                                </div>
+                            </div></div></div>
+
+                            
+                        </div>
+                    </div>
+                </div> */}
+
+                                <div className="col-lg-2">
+                                    <ul className="about-list right-nav-about">
+                                        <li className="right-nav-list">
+                                            {/* <Link href={'/auth/signup'}> */}
+                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
                                                 <span>Download</span>
                                             </button>
-                                        {/* </Link> */}
-                                    </li>
-                                    <li className="right-nav-list">
-                                        <Link href={'/auth/login'}>
-                                            <div className="dropdown theme-form-select">
-                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                    <span>Ikuti Kami Di </span>
-                                                </button>
-                                            </div>
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-lg-3">
+                                            {/* </Link> */}
+                                        </li>
+                                        <li className="right-nav-list">
+                                            <Link href={'/auth/login'}>
+                                                <div className="dropdown theme-form-select">
+                                                    <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                        <span>Ikuti Kami Di </span>
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div className="col-lg-3">
 
-                            </div>
-                            <div className="col-lg-6">
-                                <ul className="about-list right-nav-about">
-                                    <li className="right-nav-list">
-                                        <Link href={'/auth/signup'}>
-                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                <span>Daftar Reseller</span>
-                                            </button>
-                                        </Link>
-                                    </li>
-                                    <li className="right-nav-list">
-                                        <Link href={'/auth/login'}>
-                                            <div className="dropdown theme-form-select">
-                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{'fontSize':'14px','fontWeight':'500','color':'#fff','padding':'0 0 0 0'}}>
-                                                    <span>Login Reseller</span>
+                                </div>
+                                <div className="col-lg-6">
+                                    <ul className="about-list right-nav-about">
+                                        <li className="right-nav-list">
+                                            <Link href={'/auth/signup'}>
+                                                <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                    <span>Daftar Reseller</span>
                                                 </button>
-                                            </div>
-                                        </Link>
-                                    </li>
-                                </ul>
+                                            </Link>
+                                        </li>
+                                        <li className="right-nav-list">
+                                            <Link href={'/auth/login'}>
+                                                <div className="dropdown theme-form-select">
+                                                    <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                        <span>Login Reseller</span>
+                                                    </button>
+                                                </div>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                    </div>
 
-            }
-                
+        }
 
-                <div class="top-nav top-header sticky-header">
-            <div class="container-fluid-lg">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="navbar-top">
-                            <button class="navbar-toggler d-xl-none d-inline navbar-menu-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
-                                <span class="navbar-toggler-icon">
-                                    <i class="fa-solid fa-bars"></i>
-                                </span>
-                            </button>
-                            <Link href="/" class="web-logo nav-logo">
-                                <img src="/images/ditokoku.png" className="img-fluid blur-up lazyloaded" alt="" />
-                            </Link>
 
-                            <div class="header-nav-middle">
-                                <div class="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
-                                    <div class="offcanvas offcanvas-collapse order-xl-2" id="primaryMenu">
-                                        <div class="offcanvas-header navbar-shadow">
-                                            <h5>Menu</h5>
-                                            <button class="btn-close lead" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                                        </div>
-                                        <div class="offcanvas-body">
-                                            <ul class="navbar-nav">
-    
-                                                <li class="nav-item dropdown">
-                                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown">Kategori</a>
-    
-                                                    <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a class="dropdown-item" href="index.html">Kartshop</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-2.html">Sweetshop</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-3.html">Organic</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-4.html">Supershop</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-5.html">Classic shop</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-6.html">Furniture</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-7.html">Search Oriented</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-8.html">Category Focus</a>
-                                                        </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="index-9.html">Fashion</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-    
-                                                <li className="nav-item">
-                                                        <div class="search-box">
-                                                            <div class="input-group" style={{width:'200px', marginRight:'200px'}}>
-                                                                <input type="search" class="form-control" placeholder="Cari ditokoku...." aria-label="Recipient's username" aria-describedby="button-addon2" />
-                                                                {/* <button class="btn search-button-2" type="button" id="button-addon2">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                                                </button> */}
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        </li>
+<div className="top-nav top-header sticky-header">
+    <div className="container-fluid-lg">
+        <div className="row">
+            <div className="col-12">
+                <div className="navbar-top">
+                    <button className="navbar-toggler d-xl-none d-inline navbar-menu-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#primaryMenu">
+                        <span className="navbar-toggler-icon">
+                            <i className="fa-solid fa-bars"></i>
+                        </span>
+                    </button>
+                    <Link href="/" className="web-logo nav-logo">
+                        <img src="/images/ditokoku.png" className="img-fluid blur-up lazyloaded" alt="" />
+                    </Link>
 
-                                                        <li className="">
-                                                        Saldo Bonus: Rp. {(cookiesData ? cookiesData.balance_bonus_amount : 0)} <br/>
-                                                        Saldo Regular: Rp. {(cookiesData ? cookiesData.balance_regular_amount : 0)}
+                    <div className="header-nav-middle">
+                        <div className="main-nav navbar navbar-expand-xl navbar-light navbar-sticky">
+                            <div className="offcanvas offcanvas-collapse order-xl-2" id="primaryMenu">
+                                <div className="offcanvas-header navbar-shadow">
+                                    <h5>Menu</h5>
+                                    <button className="btn-close lead" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                                </div>
+                                <div className="offcanvas-body">
+                                    <ul className="navbar-nav">
+
+                                        <li className="nav-item dropdown">
+                                            <a className="nav-link dropdown-toggle" href="#javascript" data-bs-toggle="dropdown">Kategori</a>
+
+                                            <ul className="dropdown-menu">
+                                                {(categoryProducts.length > 0 ? categoryProducts.map((data, index) => {
+                                                    return(
+                                                        <li key={index}>
+                                                            <a className="dropdown-item" href="#javascript">{data.category_product_name}</a>
                                                         </li>
+                                                    )
+                                                })
+                                                :
+                                                    <li>
+                                                        <a className="dropdown-item" href="#javascript">Data Tidak Tersedia</a>
+                                                    </li>
+                                                )
+
+                                                }
+                                                
                                             </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            { props.status_code === 200 ?
-                            <div class="rightside-box">
-                                {/* <div class="search-full">
-                                    <div class="input-group">
-                                        <span class="input-group-text">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search font-light"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                        </span>
-                                        <input type="text" class="form-control search-type" placeholder="Search here.."/>
-                                        <span class="input-group-text close-search">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x font-light"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                        </span>
-                                    </div>
-                                </div> */}
-                                <ul class="right-side-menu">
-                                    {/* <li class="right-side">
-                                        <div class="delivery-login-box">
-                                            <div class="delivery-icon">
-                                                <div class="search-box">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                        </li>
+
+                                        <li className="nav-item">
+                                            <div className="search-box">
+                                                <div className="input-group" style={{ width: '200px', marginRight: '200px' }}>
+                                                    <input type="search" className="form-control" placeholder="Cari ditokoku...." aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                                    {/* <button className="btn search-button-2" type="button" id="button-addon2">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                </button> */}
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li> */}
-                                    <li class="right-side">
-                                        {/* <a href="wishlist.html" class="btn p-0 position-relative header-wishlist">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                                        </a> */}
-                                    </li>
-                                    <li class="right-side">
-                                    <button type="button" class="btn p-0 position-relative header-wishlist">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                                                <span class="position-absolute top-0 start-100 translate-middle badge">2
-                                                    <span class="visually-hidden">unread messages</span>
-                                                </span>
-                                            </button>
-                                    </li>
-                                    
-                                            <li className="right-side onhover-dropdown">
-                                                <div className="delivery-login-box">
-                                                    <div className="delivery-icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                                    </div>
-                                                    <div className="delivery-detail">
-                                                        <h6>Hello,</h6>
-                                                        <h5>My Account</h5>
-                                                    </div>
-                                                </div>
 
-                                                <div className="onhover-div onhover-div-login">
-                                                    <ul className="user-box-name">
-                                                        <Link href={'/dashboard/profile'}>
-                                                        <li className="product-box-contain">
-                                                            <a href='#javascript'>
-                                                                Profil
-                                                            </a>
-                                                        </li>
-                                                        </Link>
-                                                    </ul>
-                                                    <ul className="user-box-name">
-                                                        <li className="product-box-contain">
-                                                            <a href='#javascript' onClick={handleSignOut}>
-                                                                Keluar
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        
-                                </ul>
+                                        </li>
+
+                                        <li className="">
+                                            Saldo Bonus: Rp. {(cookiesData ? cookiesData.balance_bonus_amount : 0)} <br />
+                                            Saldo Regular: Rp. {(cookiesData ? cookiesData.balance_regular_amount : 0)}
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            :
-                            <div></div>
-                            }
                         </div>
                     </div>
+                    {props.status_code === 200 ?
+                        <div className="rightside-box">
+                            {/* <div className="search-full">
+                    <div className="input-group">
+                        <span className="input-group-text">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search font-light"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        </span>
+                        <input type="text" className="form-control search-type" placeholder="Search here.."/>
+                        <span className="input-group-text close-search">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-x font-light"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </span>
+                    </div>
+                </div> */}
+                            <ul className="right-side-menu">
+                                {/* <li className="right-side">
+                        <div className="delivery-login-box">
+                            <div className="delivery-icon">
+                                <div className="search-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </li> */}
+                                <li className="right-side">
+                                    {/* <a href="wishlist.html" className="btn p-0 position-relative header-wishlist">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                        </a> */}
+                                </li>
+                                <li className="right-side">
+                                    <button type="button" className="btn p-0 position-relative header-wishlist">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                        <span className="position-absolute top-0 start-100 translate-middle badge">2
+                                            <span className="visually-hidden">unread messages</span>
+                                        </span>
+                                    </button>
+                                </li>
+
+                                <li className="right-side onhover-dropdown">
+                                    <div className="delivery-login-box">
+                                        <div className="delivery-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        </div>
+                                        <div className="delivery-detail">
+                                            <h6>Hello,</h6>
+                                            <h5>My Account</h5>
+                                        </div>
+                                    </div>
+
+                                    <div className="onhover-div onhover-div-login">
+                                        <ul className="user-box-name">
+                                            <li className="product-box-contain">
+                                                <Link href={'/dashboard/profile'}>
+                                                    Profil
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                        <ul className="user-box-name">
+                                            <li className="product-box-contain">
+                                                <Link href={'/dashboard/topup'}>
+                                                    Top Up Saldo
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                        <ul className="user-box-name">
+                                            <li className="product-box-contain">
+                                                <a href='#javascript' onClick={handleSignOut}>
+                                                    Keluar
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                        :
+                        <div></div>
+                    }
                 </div>
             </div>
         </div>
-            </header>
-            {/* header fix menu end */}
+    </div>
+</div>
+</header>
+{/* header fix menu end */}
 
             {/* mobile menu */}
             {/* <div className="mobile-menu d-md-none d-block mobile-cart">
