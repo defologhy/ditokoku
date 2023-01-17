@@ -222,8 +222,8 @@ function Profil(props) {
         //Execute Axios Configuration For JsonContentValidation
         try {
             const ResellerResults = await axios.request(axiosConfigForResellerAdd);
-            // setCookie('reseller_cookies', ResellerResults.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
-            setCookie('reseller_cookies', ResellerResults.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
+            setCookie('reseller_cookies', ResellerResults.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
+            // setCookie('reseller_cookies', ResellerResults.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             setShowModalConfirm(false);
             setShowModalUpdate(false);
             router.push('/dashboard/profile')
@@ -811,13 +811,6 @@ function Profil(props) {
                                             <li className="product-box-contain">
                                                 <Link href={'/dashboard/profile'}>
                                                     Profil
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                        <ul className="user-box-name">
-                                            <li className="product-box-contain">
-                                                <Link href={'/dashboard/topup'}>
-                                                    Top Up Saldo
                                                 </Link>
                                             </li>
                                         </ul>
