@@ -30,6 +30,7 @@ function Profil(props) {
 
     const [genderData, setGenderData] = useState([]);
     const [categoryProducts, setCategoryProducts] = useState([])
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         getGender();
@@ -179,6 +180,7 @@ function Profil(props) {
     }
 
     const handleProfilUpdateConfirm = async () => {
+        setIsLoading(true);
         //Execute update Data
         let imageFilename = ""
 
@@ -227,20 +229,25 @@ function Profil(props) {
             setShowModalConfirm(false);
             setShowModalUpdate(false);
             router.push('/dashboard/profile')
+            setIsLoading(false);
         }
         catch (error) {
             console.log("error:")
             console.log(error)
             if (error.response == null) {
+                setIsLoading(false);
                 setShowModalError(true)
                 setModalErrorMessage({ title: 'Internal Server Error', message: 'Terjadi Error Saat Proses Update Profil, Harap Lapor Kepada Administrator' })
+                
             } else {
+                setIsLoading(false);
                 if (error.response.status === 401) {
                     router.push("/auth/sign-in");
                     return {}
                 }
                 setShowModalError(true)
                 setModalErrorMessage({ title: error.response.data.error_title, message: error.response.data.error_message })
+                
             }
         }
 
@@ -362,7 +369,19 @@ function Profil(props) {
                 </Modal.Footer>
             </Modal> : null}
 
+            {/* loading */}
+            { isLoading ? <div className="fullpage-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div> : null
+            }
+            
         {/* header fix menu start */}
+
         <header>
 
         {

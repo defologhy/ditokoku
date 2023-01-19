@@ -19,6 +19,7 @@ function Login(props) {
     const [showModalError, setShowModalError] = useState(false);
     const [modalErrorMessage, setModalErrorMessage] = useState({ title: '', message: '' });
     const handleCloseModalError = () => setShowModalError(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     if (props.status_code === 200) {
         router.push('/')
@@ -26,6 +27,7 @@ function Login(props) {
 
     // sign in
     const handleSignIn = async () => {
+        setIsLoading(true);
         const axiosConfigForSignIn = {
             url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + "/resellers/sign-in"
             , method: "POST"
@@ -42,24 +44,28 @@ function Login(props) {
 
         //Execute Axios Configuration For JsonContentValidation
         try {
-            // setIsLoading(true);
             const signInResult = await axios.request(axiosConfigForSignIn);
             setCookie('reseller_cookies', signInResult.data.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             // setCookie('reseller_cookies', signInResult.data.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             router.push('/')
+            setIsLoading(false);
         } catch (error) {
             console.log("error:")
             console.log(error)
             if (error.response == null) {
+                setIsLoading(false);
                 setShowModalError(true)
                 setModalErrorMessage({ title: 'Internal Server Error', message: 'Terjadi Error Saat Proses Masuk, Harap Lapor Kepada Administrator' })
+                
             } else {
+                setIsLoading(false);
                 if (error.response.status === 401) {
-                    router.push("/auth/sign-in");
+                    router.push("/auth/login");
                     return {}
                 }
                 setShowModalError(true)
                 setModalErrorMessage({ title: error.response.data.error_title, message: error.response.data.error_message })
+                
             }
         }
 
@@ -82,6 +88,17 @@ function Login(props) {
                     </Button>
                 </Modal.Footer>
             </Modal> : null}
+
+            {/* loading */}
+            { isLoading ? <div className="fullpage-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div> : null
+            }
 
             <section className="log-in-section background-image-2 section-b-space">
                 <div className="container-fluid-lg w-100">

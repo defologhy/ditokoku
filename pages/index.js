@@ -679,7 +679,7 @@ function Home(props) {
                     <div className="container-fluid" style={{ padding: '0px' }}>
                         <div className="row">
                             <div className="col-xs-12">
-                                <a className="navbar-brand logo" href="index.html">
+                                <a className="navbar-brand logo" href="#javascript">
                                 <img src={process.env.REACT_APP_DITOKOKU_API_BASE_URL +'/assets/images/banner/'+bannerImageFilename} alt="banner image" style={{ width: '100%' }} crossOrigin='anonymous'/>
                                    
                                 </a>

@@ -19,12 +19,14 @@ function Signup(props) {
     const [resellerUsername, setResellerUsername] = useState("")
     const [resellerPhoneNumber, setResellerPhoneNumber] = useState("")
     const [resellerPassword, setResellerPassword] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleSignUp = async () => {
         setShowModalConfirm(true)
     }
 
     const handleSignUpConfirm = async () => {
+        setIsLoading(true);
         //Execute Add Data
         const axiosConfigForResellerAdd = {
             url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + "/resellers"
@@ -50,14 +52,17 @@ function Signup(props) {
             setCookie('reseller_cookies', ResellerResults.data, { expires: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             // setCookie('reseller_cookies', ResellerResults.data, { maxAge: Number(process.env.REACT_APP_COOKIE_EXPIRES) });
             router.push('/')
+            setIsLoading(false);
         }
         catch (error) {
             console.log("error:")
             console.log(error)
             if (error.response == null) {
+                setIsLoading(false);
                 setShowModalError(true)
                 setModalErrorMessage({ title: 'Internal Server Error', message: 'Terjadi Error Saat Proses Daftar, Harap Lapor Kepada Administrator' })
             } else {
+                setIsLoading(false);
                 if (error.response.status === 401) {
                     router.push("/auth/sign-in");
                     return {}
@@ -103,6 +108,17 @@ function Signup(props) {
                     </Button>
                 </Modal.Footer>
             </Modal> : null}
+
+            {/* loading */}
+            { isLoading ? <div className="fullpage-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div> : null
+            }
 
             <section className="log-in-section section-b-space">
                 <div className="container-fluid-lg w-100">
