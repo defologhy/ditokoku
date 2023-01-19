@@ -10,10 +10,10 @@ import DashboardReseller from '../components/dashboard-reseller';
 function Address(props) {
     const router = useRouter()
 
-    console.log("props address page:"); console.log(props);
-
-    const cookiesData = JSON.parse(props.cookies_data);
-
+    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : undefined);
+    
+    console.log("props address page:"); console.log(cookiesData);
+    
     if (process.browser) {
         if (props.status_code === 401) {
             router.push('/auth/login')
@@ -31,7 +31,7 @@ function Address(props) {
             </Head>
 
             {/* header fix menu start */}
-            <Header props={props} />
+            <Header props={cookiesData} />
             {/* header fix menu end */}
 
             {/* user dashboard menu */}

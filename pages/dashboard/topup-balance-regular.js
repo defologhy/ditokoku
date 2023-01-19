@@ -13,7 +13,7 @@ function TopUpBalanceRegular(props) {
 
     console.log("props TopUpBalanceRegular page:"); console.log(props);
 
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : {});
+    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : undefined);
     const [showModalError, setShowModalError] = useState(false);
     const [modalErrorMessage, setModalErrorMessage] = useState({ title: '', message: '' });
     const handleCloseModalError = () => setShowModalError(false);
@@ -415,14 +415,14 @@ function TopUpBalanceRegular(props) {
                 </Modal.Footer>
             </Modal> : null}
 
-            <Header props={props} />
+            <Header props={cookiesData} />
 
             {/* user dashboard menu */}
             <section class="user-dashboard-section section-b-space">
                 <div class="container-fluid-lg">
                     <div class="row">
                         <div class="col-xxl-3 col-lg-4">
-                            <DashboardReseller props={props} isActive="topup-balance-regular" />
+                            <DashboardReseller props={cookiesData} isActive="topup-balance-regular" />
                         </div>
 
                         <div class="col-xxl-9 col-lg-8">

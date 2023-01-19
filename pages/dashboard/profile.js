@@ -13,7 +13,7 @@ function Profil(props) {
 
     console.log("props Profile page:"); console.log(props);
     const [showToastWelcome, setShowToastWelcome] = useState(true);
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : {});
+    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : undefined);
     const [showModalError, setShowModalError] = useState(false);
     const [modalErrorMessage, setModalErrorMessage] = useState({ title: '', message: '' });
     const handleCloseModalError = () => setShowModalError(false);
@@ -317,7 +317,7 @@ function Profil(props) {
             }
 
             {/* header fix menu start */}
-            <Header props={props} />
+            <Header props={cookiesData} />
             {/* header fix menu end */}
 
             {/* user dashboard menu */}
@@ -325,7 +325,7 @@ function Profil(props) {
                 <div className="container-fluid-lg">
                     <div className="row">
                         <div className="col-xxl-3 col-lg-4">
-                            <DashboardReseller props={props} isActive="profile"/>
+                            <DashboardReseller props={cookiesData} isActive="profile"/>
                         </div>
 
                         <div className="col-xxl-9 col-lg-8">

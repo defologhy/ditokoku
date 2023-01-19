@@ -14,7 +14,7 @@ function BankAccount(props) {
     console.log("props BankAccount page:"); console.log(props);
 
     const [showToastWelcome, setShowToastWelcome] = useState(true);
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : {});
+    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : undefined);
     const [showModalInsertBankAccount, setshowModalInsertBankAccount] = useState(false);
     const handleCloseModalInsertBankAccount = () => setshowModalInsertBankAccount(false);
     const [showModalEditBankAccount, setshowModalEditBankAccount] = useState(false);
@@ -361,7 +361,7 @@ function BankAccount(props) {
             </Modal> : null}
 
             {/* header fix menu start */}
-            <Header props={props} />
+            <Header props={cookiesData} />
             {/* header fix menu end */}
 
             {/* user dashboard menu */}
@@ -369,7 +369,7 @@ function BankAccount(props) {
                 <div class="container-fluid-lg">
                     <div class="row">
                         <div class="col-xxl-3 col-lg-4">
-                            <DashboardReseller props={props} isActive="bank-accounts"/>
+                            <DashboardReseller props={cookiesData} isActive="bank-accounts"/>
                         </div>
 
                         <div class="col-xxl-9 col-lg-8">
