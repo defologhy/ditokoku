@@ -661,13 +661,6 @@ function TopUpBalanceRegular(props) {
                                                         </ul>
                                                         <ul className="user-box-name">
                                                             <li className="product-box-contain">
-                                                                <Link href={'/dashboard/topup-balance-regular'}>
-                                                                    Top Up Saldo
-                                                                </Link>
-                                                            </li>
-                                                        </ul>
-                                                        <ul className="user-box-name">
-                                                            <li className="product-box-contain">
                                                                 <a href='#javascript' onClick={handleSignOut}>
                                                                     Keluar
                                                                 </a>
