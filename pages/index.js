@@ -135,7 +135,7 @@ function Home(props) {
     const [bannerId, setBannerId] = useState(null)
     const [bannerImageFilename, setBannerImageFilename] = useState(null)
     const [categoryProducts, setCategoryProducts] = useState([])
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : null);
+    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : undefined);
     console.log("props Home page:"); console.log(cookiesData);
 
     return (
@@ -145,7 +145,7 @@ function Home(props) {
                 <link rel="shortcut icon" href="/images/ditokoku2.png" />
             </Head>
             {/* header fix menu start */}
-            <Header props={props}/>
+            <Header props={cookiesData}/>
             {/* header fix menu end */}
 
             {/* mobile menu */}

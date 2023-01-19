@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function Header({ props }) {
 
-    const cookiesData = (props ? JSON.parse(props.cookies_data) : {});
+    const cookiesData = (props && props.cookies_data ? JSON.parse(props.cookies_data) : {});
     // usestate
     const [categoryProducts, setCategoryProducts] = useState([])
     const router = useRouter()
