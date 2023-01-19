@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function Header({ props }) {
 
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : {});
+    const cookiesData = (props ? JSON.parse(props.cookies_data) : {});
     // usestate
     const [categoryProducts, setCategoryProducts] = useState([])
     const router = useRouter()
@@ -81,7 +81,7 @@ function Header({ props }) {
         <header>
 
             {
-                props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
+                cookiesData.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
                     <div>
                         <div className="header-top bg-dark">
                             <div className="container-fluid-lg">
@@ -191,7 +191,7 @@ function Header({ props }) {
                             </div>
                         </div>
                     </div>
-                    : props.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
+                    : cookiesData.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
                         <div>
                             <div className="header-top bg-dark">
                                 <div className="container-fluid-lg">
@@ -473,7 +473,7 @@ function Header({ props }) {
                                         </div>
                                     </div>
                                 </div>
-                                {props.status_code === 200 ?
+                                {cookiesData.status_code === 200 ?
                                     <div className="rightside-box">
                                         {/* <div className="search-full">
                 <div className="input-group">
