@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 function DashboardReseller({props, isActive}) {
 
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : {});
+    const cookiesData = (props ? JSON.parse(props.cookies_data) : {});
 
     return (
         <div className="dashboard-left-sidebar">
