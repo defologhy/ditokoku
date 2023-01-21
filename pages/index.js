@@ -365,7 +365,7 @@ function Home(props) {
 
                                 {(categoryProducts.length > 0 ? categoryProducts.map((data, index) => {
                                     return (
-                                        <Link href="#javascript" className="category-box category-dark wow fadeInUp" tabIndex={index} style={{ visibility: 'visible', animationName: 'fadeInUp' }}>
+                                        <Link href="#javascript" className="category-box category-dark wow fadeInUp" tabIndex={index} style={{ visibility: 'visible', animationName: 'fadeInUp' }} key={key}>
                                             <div>
                                                 <img src={process.env.REACT_APP_DITOKOKU_API_BASE_URL + '/assets/images/category-products/' + (data.category_product_image_filename ? data.category_product_image_filename : 't-shirt.svg')} className="blur-up lazyloaded" alt="" crossOrigin="anonymous" />
                                                 <h5>{data.category_product_name}</h5>

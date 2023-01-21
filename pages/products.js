@@ -12,7 +12,7 @@ function Products(){
                                     <h2>Top Save Today</h2>
                                     <span class="title-leaf">
                                         <svg class="icon-width">
-                                            <use xlink:href="link=https://themes.pixelstrap.com/fastkart/svg/leaf.svg#cake"></use>
+                                            {/* <use xlink:href="link=https://themes.pixelstrap.com/fastkart/svg/leaf.svg#cake"></use> */}
                                         </svg>
                                     </span>
                                 </div>
