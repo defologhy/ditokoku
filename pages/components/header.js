@@ -7,7 +7,7 @@ import axios from 'axios';
 function Header({ props }) {
 
     const cookiesData = (props ? props : {});
-    console.log("cookiesData on header",cookiesData)
+    console.log("cookiesData on header", cookiesData)
     // usestate
     const [categoryProducts, setCategoryProducts] = useState([])
     const [resellerDataDynamic, setResellerDataDynamic] = useState([])
@@ -210,13 +210,20 @@ function Header({ props }) {
                                                 {/* </Link> */}
                                             </li>
                                             <li className="right-nav-list">
-                                                {/* <Link href={'/auth/login'}> */}
                                                 <div className="dropdown theme-form-select">
                                                     <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
-                                                        <span>Ikuti Kami Di </span>
+                                                        <span>Ikuti Kami Di
+                                                            &nbsp;<Link href={"#"} style={{ color: 'white' }}>
+                                                                <i className="fab fa-facebook-f"></i>
+                                                            </Link>
+
+                                                            &nbsp;<Link href={"#"} style={{ color: 'white' }}>
+                                                                <i className="fab fa-instagram"></i>
+                                                            </Link>
+
+                                                        </span>
                                                     </button>
                                                 </div>
-                                                {/* </Link> */}
                                             </li>
                                         </ul>
                                     </div>
@@ -320,13 +327,20 @@ function Header({ props }) {
                                                     {/* </Link> */}
                                                 </li>
                                                 <li className="right-nav-list">
-                                                    <Link href={'/auth/login'}>
-                                                        <div className="dropdown theme-form-select">
-                                                            <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
-                                                                <span>Ikuti Kami Di </span>
-                                                            </button>
-                                                        </div>
-                                                    </Link>
+                                                    <div className="dropdown theme-form-select">
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Ikuti Kami Di
+                                                                &nbsp;<Link href={"#"} style={{ color: 'white' }}>
+                                                                    <i className="fab fa-facebook-f"></i>
+                                                                </Link>
+
+                                                                &nbsp;<Link href={"#"} style={{ color: 'white' }}>
+                                                                    <i className="fab fa-instagram"></i>
+                                                                </Link>
+
+                                                            </span>
+                                                        </button>
+                                                    </div>
                                                 </li>
                                             </ul>
                                         </div>
@@ -419,9 +433,9 @@ function Header({ props }) {
                                             <ul className="about-list right-nav-about">
                                                 <li className="right-nav-list">
                                                     <Link href={'#'}>
-                                                    <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
-                                                        <span>Download</span>
-                                                    </button>
+                                                        <button className="btn" type="button" id="select-language" data-bs-toggle="dropdown" aria-expanded="false" style={{ 'fontSize': '14px', 'fontWeight': '500', 'color': '#fff', 'padding': '0 0 0 0' }}>
+                                                            <span>Download</span>
+                                                        </button>
                                                     </Link>
                                                 </li>
                                                 <li className="right-nav-list">
@@ -526,8 +540,8 @@ function Header({ props }) {
                                                             <div className="input-group" style={{ width: '500px', marginRight: '10px' }}>
                                                                 <input type="search" className="form-control" placeholder="Cari ditokoku...." aria-label="Recipient's username" aria-describedby="button-addon2" />
                                                                 <button className="btn search-button-2" type="button" id="button-addon2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                            </button>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                                                </button>
                                                             </div>
                                                         </div>
 
@@ -535,7 +549,7 @@ function Header({ props }) {
 
                                                     <li className="">
                                                         Saldo Bonus: Rp. {(cookiesData.hasOwnProperty('balance_bonus_amount') ? cookiesData.balance_bonus_amount : 0)} <br />
-                                                        Saldo Regular: Rp. {(resellerDataDynamic.length>0 ? resellerDataDynamic[0].balance_regular_amount : 0)}
+                                                        Saldo Regular: Rp. {(resellerDataDynamic.length > 0 ? resellerDataDynamic[0].balance_regular_amount : 0)}
                                                     </li>
                                                 </ul>
                                             </div>
