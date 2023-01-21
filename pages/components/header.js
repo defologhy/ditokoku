@@ -141,7 +141,7 @@ function Header({ props }) {
         <header>
 
             {
-                Object.values(cookiesData).includes(null) === true ?
+                cookiesData.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
                     <div>
                         <div className="header-top bg-dark">
                             <div className="container-fluid-lg">
@@ -251,7 +251,7 @@ function Header({ props }) {
                             </div>
                         </div>
                     </div>
-                    : Object.values(cookiesData).includes(null) === false ?
+                    : cookiesData.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
                         <div>
                             <div className="header-top bg-dark">
                                 <div className="container-fluid-lg">

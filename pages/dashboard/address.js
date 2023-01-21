@@ -10,7 +10,8 @@ import DashboardReseller from '../components/dashboard-reseller';
 function Address(props) {
     const router = useRouter()
 
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : undefined);
+    let cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : props);
+    cookiesData = (props.status_code===200?Object.assign(cookiesData,{status_code:200}): props)
     
     console.log("props address page:"); console.log(cookiesData);
     

@@ -14,7 +14,8 @@ function BankAccount(props) {
     console.log("props BankAccount page:"); console.log(props);
 
     const [showToastWelcome, setShowToastWelcome] = useState(true);
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : undefined);
+    let cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : props);
+    cookiesData = (props.status_code===200?Object.assign(cookiesData,{status_code:200}): props)
     const [showModalInsertBankAccount, setshowModalInsertBankAccount] = useState(false);
     const handleCloseModalInsertBankAccount = () => setshowModalInsertBankAccount(false);
     const [showModalEditBankAccount, setshowModalEditBankAccount] = useState(false);

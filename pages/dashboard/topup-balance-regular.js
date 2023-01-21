@@ -13,7 +13,8 @@ function TopUpBalanceRegular(props) {
 
     console.log("props TopUpBalanceRegular page:"); console.log(props);
 
-    const cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : undefined);
+    let cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : props);
+    cookiesData = (props.status_code===200?Object.assign(cookiesData,{status_code:200}): props)
     const [showModalError, setShowModalError] = useState(false);
     const [modalErrorMessage, setModalErrorMessage] = useState({ title: '', message: '' });
     const handleCloseModalError = () => setShowModalError(false);
