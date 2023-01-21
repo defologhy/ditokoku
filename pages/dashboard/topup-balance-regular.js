@@ -14,7 +14,7 @@ function TopUpBalanceRegular(props) {
     console.log("props TopUpBalanceRegular page:"); console.log(props);
 
     let cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : props);
-    cookiesData = (props.status_code===200?Object.assign(cookiesData,{status_code:200}): props)
+    cookiesData = (props.status_code === 200 ? Object.assign(cookiesData, { status_code: 200 }) : props)
     const [showModalError, setShowModalError] = useState(false);
     const [modalErrorMessage, setModalErrorMessage] = useState({ title: '', message: '' });
     const handleCloseModalError = () => setShowModalError(false);
@@ -22,6 +22,7 @@ function TopUpBalanceRegular(props) {
     const [showModalEditTopup, setshowModalEditTopup] = useState(false);
     const handleCloseModalEditTopup = () => setshowModalEditTopup(false);
     const [topupBalanceRegular, setTopupBalanceRegular] = useState([])
+    const [totalRecordsTopupBalanceRegular, setTotalRecordsTopupBalanceRegular] = useState([])
     const [bankAccounts, setBankAccounts] = useState([])
     const handleCloseModalInsertTopUp = () => setShowModalInsertTopUp(false);
     const [showModalConfirm, setShowModalConfirm] = useState(false);
@@ -130,6 +131,13 @@ function TopUpBalanceRegular(props) {
                 console.log("getDataTopupBalanceRegular", getData)
 
                 setTopupBalanceRegular((getData.data.length != 0 ? getData.data : []))
+                setTotalRecordsTopupBalanceRegular(
+                    {
+                        total_records: getData.pagination.total_records,
+                        total_records_process: getData.pagination.total_records_process,
+                        total_records_verified: getData.pagination.total_records_verified
+                    }
+                )
 
                 // form.setFieldsValue({
                 //     bannerId : (getData.data.length!=0 ? getData.data[0].banner_id : '')
@@ -295,7 +303,7 @@ function TopUpBalanceRegular(props) {
                             <Form.Label>Akun Bank</Form.Label>
                             <Form.Select aria-label="Pilih Akun Bank Kamu"
                                 onChange={(e) => setBankAccountAdd(e.target.value)}>
-                                    <option value="">Pilih Akun Bank Kamu</option>
+                                <option value="">Pilih Akun Bank Kamu</option>
                                 {
                                     bankAccounts.map(data => {
                                         return (
@@ -458,7 +466,7 @@ function TopUpBalanceRegular(props) {
                                                             <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/order.svg" class="blur-up lazyloaded" alt="" />
                                                             <div class="totle-detail">
                                                                 <h5>Total Menunggu Verifikasi</h5>
-                                                                <h3>next pekerjaan</h3>
+                                                                <h3>{totalRecordsTopupBalanceRegular.total_records_process}</h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -469,7 +477,7 @@ function TopUpBalanceRegular(props) {
                                                             <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/pending.svg" class="blur-up lazyloaded" alt="" />
                                                             <div class="totle-detail">
                                                                 <h5>Total Terverifikasi</h5>
-                                                                <h3>next pekerjaan</h3>
+                                                                <h3>{totalRecordsTopupBalanceRegular.total_records_verified}</h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -479,8 +487,8 @@ function TopUpBalanceRegular(props) {
                                                             <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/wishlist.svg" class="img-1 blur-up lazyloaded" alt="" />
                                                             <img src="https://themes.pixelstrap.com/fastkart/assets/images/svg/wishlist.svg" class="blur-up lazyloaded" alt="" />
                                                             <div class="totle-detail">
-                                                                <h5>Total Pengajuan</h5>
-                                                                <h3>next pekerjaan</h3>
+                                                                <h5>Total Data</h5>
+                                                                <h3>{totalRecordsTopupBalanceRegular.total_records}</h3>
                                                             </div>
                                                         </div>
                                                     </div>
