@@ -21,9 +21,9 @@ function Login(props) {
     const handleCloseModalError = () => setShowModalError(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    if (props.status_code === 200) {
-        router.push('/')
-    }
+    // if (props.status_code === 200) {
+    //     router.push('/')
+    // }
 
     // sign in
     const handleSignIn = async () => {
