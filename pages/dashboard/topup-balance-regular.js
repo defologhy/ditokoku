@@ -291,9 +291,10 @@ function TopUpBalanceRegular(props) {
                 <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3">
-                            <Form.Label>Pilih Akun Bank Kamu</Form.Label>
+                            <Form.Label>Akun Bank</Form.Label>
                             <Form.Select aria-label="Pilih Akun Bank Kamu"
                                 onChange={(e) => setBankAccountAdd(e.target.value)}>
+                                    <option value="">Pilih Akun Bank Kamu</option>
                                 {
                                     bankAccounts.map(data => {
                                         return (

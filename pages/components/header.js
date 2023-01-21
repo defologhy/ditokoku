@@ -7,15 +7,21 @@ import axios from 'axios';
 function Header({ props }) {
 
     const cookiesData = (props ? props : {});
+    console.log("cookiesData on header",cookiesData)
     // usestate
     const [categoryProducts, setCategoryProducts] = useState([])
+    const [resellerDataDynamic, setResellerDataDynamic] = useState([])
     const router = useRouter()
 
     useEffect(() => {
         getCategoryProducts();
+        getReseller();
     }, []);
     const getCategoryProducts = async () => {
         await getDataCategoryProducts();
+    }
+    const getReseller = async () => {
+        await getResellerData();
     }
     const getDataCategoryProducts = async () => {
         try {
@@ -71,6 +77,60 @@ function Header({ props }) {
             // });
         }
     }
+    const getResellerData = async () => {
+        try {
+
+            //Set Axios Configuration For Sign In to NextJS Server
+            const axiosConfigForGetData = {
+                url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + '/resellers?filter={"reseller_id":[' + cookiesData.reseller_id + ']}'
+                , method: "GET"
+                , timeout: 40000
+                , responseType: "json"
+                , responseEncoding: "utf8"
+                , headers: { "Content-Type": "application/json" }
+            };
+
+            //Execute Axios Configuration For JsonContentValidation
+            try {
+                const getDataResults = await axios.request(axiosConfigForGetData);
+                const getData = getDataResults.data;
+                console.log("getDataCategoryProducts", getData)
+
+                setResellerDataDynamic((getData.data.length != 0 ? getData.data : []))
+
+                // form.setFieldsValue({
+                //     bannerId : (getData.data.length!=0 ? getData.data[0].banner_id : '')
+                //     , imageConstruct: (getData.data.length!=0 ? getData.data[0].banner_filename : '')
+                //     , descriptionConstruct: (getData.data.length!=0 ? getData.data[0].banner_description : '')/
+                // });
+            } catch (error) {
+                console.log(error)
+                if (error.response == null) {
+                    // Modal.error({
+                    //     title: "Internal Server Error",
+                    //     content: "Error On Get Data SKU Plant Storage Location. (Please contact you system administrator and report this error message)",
+                    // });
+                } else {
+                    // if (error.response.status === 401) {
+                    //     Router.push("/security/sign-in");
+                    //     return {}
+                    // }
+                    // Modal.error({
+                    //     title: error.response.data.error_title,
+                    //     content: error.response.data.error_message,
+                    // });
+                }
+            }
+
+        } catch (error) {
+            console.log(error.error_message)
+            console.log(error)
+            // Modal.error({
+            //     title: error.error_title,
+            //     content: error.error_message,
+            // });
+        }
+    }
     const handleSignOut = async () => {
         deleteCookie('reseller_cookies')
         router.push('/auth/login')
@@ -81,7 +141,7 @@ function Header({ props }) {
         <header>
 
             {
-                cookiesData.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
+                Object.values(cookiesData).includes(null) === true ?
                     <div>
                         <div className="header-top bg-dark">
                             <div className="container-fluid-lg">
@@ -191,7 +251,7 @@ function Header({ props }) {
                             </div>
                         </div>
                     </div>
-                    : cookiesData.status_code === 200 && Object.values(cookiesData).includes(null) === false ?
+                    : Object.values(cookiesData).includes(null) === false ?
                         <div>
                             <div className="header-top bg-dark">
                                 <div className="container-fluid-lg">
@@ -474,15 +534,15 @@ function Header({ props }) {
                                                     </li>
 
                                                     <li className="">
-                                                        Saldo Bonus: Rp. {(cookiesData.hasOwnProperty('balance_bonus_amount') ? cookiesData.balance_bonus_amount : 0)} <br />
-                                                        Saldo Regular: Rp. {(cookiesData.hasOwnProperty('balance_regular_amount') ? cookiesData.balance_regular_amount : 0)}
+                                                        Saldo Bonus: Rp. {(resellerDataDynamic.length>0 ? resellerDataDynamic[0].balance_bonus_amount : 0)} <br />
+                                                        Saldo Regular: Rp. {(resellerDataDynamic.length>0 ? resellerDataDynamic[0].balance_regular_amount : 0)}
                                                     </li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {cookiesData.status_code === 200 ?
+                                {cookiesData ?
                                     <div className="rightside-box">
                                         {/* <div className="search-full">
                 <div className="input-group">

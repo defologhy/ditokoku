@@ -260,10 +260,6 @@ function Profil(props) {
                                 type="file"
                                 placeholder="Rubah Foto"
                                 onChange={(e) => setResellerImageFile(e.target.files)}
-                                onClick={(e) => {
-                                    setResellerImageFile(null)
-                                    e.target.value = null
-                                }}
                             />
                         </Form.Group>
                     </Form>
