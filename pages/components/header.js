@@ -534,7 +534,7 @@ function Header({ props }) {
                                                     </li>
 
                                                     <li className="">
-                                                        Saldo Bonus: Rp. {(resellerDataDynamic.length>0 ? resellerDataDynamic[0].balance_bonus_amount : 0)} <br />
+                                                        Saldo Bonus: Rp. {(cookiesData.hasOwnProperty('balance_bonus_amount') ? cookiesData.balance_bonus_amount : 0)} <br />
                                                         Saldo Regular: Rp. {(resellerDataDynamic.length>0 ? resellerDataDynamic[0].balance_regular_amount : 0)}
                                                     </li>
                                                 </ul>
