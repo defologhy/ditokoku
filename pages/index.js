@@ -10,6 +10,50 @@ import { Modal, Button } from 'react-bootstrap';
 
 function Home(props) {
 
+    const router = useRouter()
+    // usestate
+    const [showToastWelcome, setShowToastWelcome] = useState(true);
+    const [bannerId, setBannerId] = useState(null)
+    const [bannerImageFilename, setBannerImageFilename] = useState(null)
+    const [categoryProducts, setCategoryProducts] = useState([])
+    let cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : props);
+    cookiesData = (props.status_code === 200 ? Object.assign(cookiesData, { status_code: 200 }) : props)
+
+    const settingsSlider = {
+        dots: true,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 4,
+        initialSlide: 0,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    };
+
     useEffect(() => {
         getBanners();
         getCategoryProducts();
@@ -131,59 +175,19 @@ function Home(props) {
             // });
         }
     }
-    // show modal detail product
-    const handleShowModalDetailProduct = useCallback((data) => {
-        return async (e) => {
-            e.preventDefault()
-            setShowModalProductDetail(true)
+
+    // handle product
+    const handleDetailProduct = async (data) => {
+        router.push('/products/detail')
+    }
+    const handleShopProduct = async (data) => {
+        if (cookiesData.status_code !== 200) {
+            router.push('/auth/login')
         }
-    }, [])
-    const handleCloseModalProductDetail = () => setShowModalProductDetail(false);
-
-    const router = useRouter()
-    // usestate
-    const [showToastWelcome, setShowToastWelcome] = useState(true);
-    const [bannerId, setBannerId] = useState(null)
-    const [bannerImageFilename, setBannerImageFilename] = useState(null)
-    const [categoryProducts, setCategoryProducts] = useState([])
-    const [showModalProductDetail, setShowModalProductDetail] = useState(false);
-    let cookiesData = (props.cookies_data ? JSON.parse(props.cookies_data) : props);
-    cookiesData = (props.status_code===200?Object.assign(cookiesData,{status_code:200}): props)
-
-    const settingsSlider = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        initialSlide: 0,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    infinite: true,
-                    dots: true
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    initialSlide: 2
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    };
+    }
+    const handleDirectPageSignUp = async () => {
+        router.push('/auth/signup')
+    }
 
     return (
         <div>
@@ -191,106 +195,6 @@ function Home(props) {
                 <title>Ditokoku.id</title>
                 <link rel="shortcut icon" href="/images/ditokoku2.png" />
             </Head>
-
-            {/* modal menu*/}
-            {showModalProductDetail ?
-                <Modal className='theme-modal view-modal' dialogClassName='modal-dialog-centered modal-xl modal-fullscreen-sm-down' show={showModalProductDetail} onHide={handleCloseModalProductDetail}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>{''}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <div className="row g-sm-4 g-2">
-                            <div className="col-lg-6">
-                                <div className="slider-image">
-                                    <img src="/images/product/category/1.jpg" className="img-fluid blur-up lazyloaded" alt="" />
-                                </div>
-                            </div>
-
-                            <div className="col-lg-6">
-                                <div className="right-sidebar-modal">
-                                    <h4 className="title-name">Peanut Butter Bite Premium Butter Cookies 600 g</h4>
-                                    <h4 className="price">Rp. 50000</h4>
-                                    {/* <div className="product-rating">
-                                    <ul className="rating">
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-star fill"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-star fill"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-star fill"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-star fill"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                        </li>
-                                        <li>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                        </li>
-                                    </ul>
-                                    <span className="ms-2">8 Reviews</span>
-                                    <span className="ms-2 text-danger">6 sold in last 16 hours</span>
-                                </div> */}
-
-                                    <div className="product-detail">
-                                        <h4>Deksripsi :</h4>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                    </div>
-
-                                    <ul className="brand-list">
-                                        <li>
-                                            <div className="brand-box">
-                                                <h5>Kategori :</h5>
-                                                <h6>Best Seller</h6>
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div className="brand-box">
-                                                <h5>Potensi Keuntungan :</h5>
-                                                <h6>Rp. 10000</h6>
-                                            </div>
-                                        </li>
-
-                                        {/* <li>
-                                        <div className="brand-box">
-                                            <h5>Product Code:</h5>
-                                            <h6>W0690034</h6>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div className="brand-box">
-                                            <h5>Product Type:</h5>
-                                            <h6>White Cream Cake</h6>
-                                        </div>
-                                    </li> */}
-                                    </ul>
-
-                                    {/* <div className="select-size">
-                                    <h4>Cake Size :</h4>
-                                    <select className="form-select select-form-size">
-                                        <option selected="">Select Size</option>
-                                        <option value="1.2">1/2 KG</option>
-                                        <option value="0">1 KG</option>
-                                        <option value="1.5">1/5 KG</option>
-                                        <option value="red">Red Roses</option>
-                                        <option value="pink">With Pink Roses</option>
-                                    </select>
-                                </div> */}
-
-                                    <div className="modal-button">
-                                        <button type='button' className="btn theme-bg-color view-button icon text-white fw-bold btn-md"><i className='fab fa-shopping-cart'></i>Tambahkan Ke Keranjang</button>
-                                        {/* <button type='button' className="btn theme-bg-color view-button icon text-white fw-bold btn-md">View More Details</button> */}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </Modal.Body>
-                </Modal>
-                :
-                null
-            }
 
             {/* header fix menu start */}
             <Header props={cookiesData} />
@@ -390,7 +294,7 @@ function Home(props) {
             <section className="product-section product-section-3">
                 <div className="container-fluid-lg">
                     <div className="title">
-                        <h2>Produk Best Seller</h2>
+                        <h2>{'Nama Kategori'}</h2>
                     </div>
                     <div className="row g-sm-4 g-3">
                         <div className="col-xxl-12 ratio_110">
@@ -398,109 +302,42 @@ function Home(props) {
                             <Slider {...settingsSlider}>
                                 <div className="product-box-5 wow fadeInUp" >
                                     <div className="product-image">
-                                        <Link href="#" className="bg-size blur-up lazyloaded" style={{ "backgroundImage": "url('/images/fashion/product/1.jpg')", "backgroundSize": "cover", "backgroundPosition": "center center", "backgroundRepeat": "no-repeat", "display": "block" }}>
+                                        <Link href="#" className="bg-size blur-up lazyloaded" style={{ "backgroundImage": "url('/images/fashion/product/1.jpg')", "backgroundSize": "cover", "backgroundPosition": "center center", "backgroundRepeat": "no-repeat", "display": "block" }} onClick={() => handleDetailProduct({ id: 1, name: 'dsadas' })}>
                                             <img src="/images/fashion/product/1.jpg" className="img-fluid blur-up lazyload bg-img" alt="" style={{ "display": "none" }} />
                                         </Link>
                                     </div>
 
                                     <div className="product-detail">
-                                        <Link href="#" tabIndex="0" onClick={handleShowModalDetailProduct({
-                                            image: '/images/fashion/product/1.jpg',
-                                            name: 'brown khadi jacket'
-                                        })}>
-                                            <h5 className="name">brown khadi jacket</h5>
+                                        <Link href="#" tabIndex="0" onClick={() => handleDetailProduct({ id: 1, name: 'dsadas' })}>
+                                            <h5 className="name">Nama Produk</h5>
                                         </Link>
 
                                         <h5 className="sold text-content">
-                                            <span className="theme-color price">Rp.2000</span>
+                                            <span className="theme-color price">Harga Produk</span>
                                         </h5>
-                                        <h5 className="">
-                                            <span className="">Potensi keuntungan Rp.2000</span>
+                                        <h5 className="" style={{ marginTop: '10px' }}>
+                                            <span className="">* Potensi keuntungan Reseller Rp.</span>
                                         </h5>
-                                    </div>
-                                </div>
+                                        <div className="row" style={{ marginTop: '10px' }}>
+                                            <div className="col-6">
+                                                <button class="btn text-white btn-sm" style={{ width: '100%', backgroundColor: '#417394' }} onClick={() => handleDetailProduct({ id: 1, name: 'dsadas' })}> <i class="fa fa-info-circle"></i>&nbsp; Detail</button>
+                                            </div>
+                                            <div className="col-6">
+                                                <button class="btn text-white btn-sm" style={{ width: '100%', backgroundColor: '#417394' }} onClick={() => handleShopProduct({ id: 1, name: 'dsadas' })}> <i class="fa fa-shopping-cart"></i>&nbsp;Beli</button>
+                                            </div>
 
-                                <div className="product-box-5 wow fadeInUp" >
-                                    <div className="product-image">
-                                        <Link href="#" className="bg-size blur-up lazyloaded" style={{ "backgroundImage": "url('/images/fashion/product/1.jpg')", "backgroundSize": "cover", "backgroundPosition": "center center", "backgroundRepeat": "no-repeat", "display": "block" }}>
-                                            <img src="/images/fashion/product/1.jpg" className="img-fluid blur-up lazyload bg-img" alt="" style={{ "display": "none" }} />
-                                        </Link>
-                                    </div>
+                                        </div>
+                                        {
+                                            (cookiesData.status_code !== 200) ?
+                                                <div className="row" style={{ marginTop: '10px' }}>
+                                                    <div className="col-12">
+                                                        <button class="btn text-white btn-sm" style={{ width: '100%', backgroundColor: '#0da487' }} onClick={handleDirectPageSignUp}> <i class="fa fa-user-plus"></i>&nbsp; Daftar Sebagai Reseller</button>
+                                                    </div>
 
-                                    <div className="product-detail">
-                                        <Link href="#" tabIndex="0">
-                                            <h5 className="name">brown khadi jacket</h5>
-                                        </Link>
-
-                                        <h5 className="sold text-content">
-                                            <span className="theme-color price">Rp.2000</span>
-                                        </h5>
-                                        <h5 className="">
-                                            <span className="">Potensi keuntungan Rp.2000</span>
-                                        </h5>
-                                    </div>
-                                </div>
-
-                                <div className="product-box-5 wow fadeInUp" >
-                                    <div className="product-image">
-                                        <Link href="#" className="bg-size blur-up lazyloaded" style={{ "backgroundImage": "url('/images/fashion/product/1.jpg')", "backgroundSize": "cover", "backgroundPosition": "center center", "backgroundRepeat": "no-repeat", "display": "block" }}>
-                                            <img src="/images/fashion/product/1.jpg" className="img-fluid blur-up lazyload bg-img" alt="" style={{ "display": "none" }} />
-                                        </Link>
-                                    </div>
-
-                                    <div className="product-detail">
-                                        <Link href="#" tabIndex="0">
-                                            <h5 className="name">brown khadi jacket</h5>
-                                        </Link>
-
-                                        <h5 className="sold text-content">
-                                            <span className="theme-color price">Rp.2000</span>
-                                        </h5>
-                                        <h5 className="">
-                                            <span className="">Potensi keuntungan Rp.2000</span>
-                                        </h5>
-                                    </div>
-                                </div>
-
-                                <div className="product-box-5 wow fadeInUp" >
-                                    <div className="product-image">
-                                        <Link href="#" className="bg-size blur-up lazyloaded" style={{ "backgroundImage": "url('/images/fashion/product/1.jpg')", "backgroundSize": "cover", "backgroundPosition": "center center", "backgroundRepeat": "no-repeat", "display": "block" }}>
-                                            <img src="/images/fashion/product/1.jpg" className="img-fluid blur-up lazyload bg-img" alt="" style={{ "display": "none" }} />
-                                        </Link>
-                                    </div>
-
-                                    <div className="product-detail">
-                                        <Link href="#" tabIndex="0">
-                                            <h5 className="name">brown khadi jacket</h5>
-                                        </Link>
-
-                                        <h5 className="sold text-content">
-                                            <span className="theme-color price">Rp.2000</span>
-                                        </h5>
-                                        <h5 className="">
-                                            <span className="">Potensi keuntungan Rp.2000</span>
-                                        </h5>
-                                    </div>
-                                </div>
-
-                                <div className="product-box-5 wow fadeInUp" >
-                                    <div className="product-image">
-                                        <Link href="#" className="bg-size blur-up lazyloaded" style={{ "backgroundImage": "url('/images/fashion/product/1.jpg')", "backgroundSize": "cover", "backgroundPosition": "center center", "backgroundRepeat": "no-repeat", "display": "block" }}>
-                                            <img src="/images/fashion/product/1.jpg" className="img-fluid blur-up lazyload bg-img" alt="" style={{ "display": "none" }} />
-                                        </Link>
-                                    </div>
-
-                                    <div className="product-detail">
-                                        <Link href="#" tabIndex="0">
-                                            <h5 className="name">brown khadi jacket</h5>
-                                        </Link>
-
-                                        <h5 className="sold text-content">
-                                            <span className="theme-color price">Rp.2000</span>
-                                        </h5>
-                                        <h5 className="">
-                                            <span className="">Potensi keuntungan Rp.2000</span>
-                                        </h5>
+                                                </div>
+                                                :
+                                                ''
+                                        }
                                     </div>
                                 </div>
 
