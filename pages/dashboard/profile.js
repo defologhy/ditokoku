@@ -213,7 +213,7 @@ function Profil(props) {
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-                            <Form.Label>Rubah Password</Form.Label>
+                            <Form.Label>Ubah Password</Form.Label>
                             <Form.Control
                                 type="password"
                                 placeholder="*******"
@@ -256,10 +256,10 @@ function Profil(props) {
                             </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput6">
-                            <Form.Label>Rubah Foto</Form.Label>
+                            <Form.Label>Ubah Foto</Form.Label>
                             <Form.Control
                                 type="file"
-                                placeholder="Rubah Foto"
+                                placeholder="Ubah Foto"
                                 onChange={(e) => setResellerImageFile(e.target.files)}
                             />
                         </Form.Group>
@@ -441,7 +441,7 @@ function Profil(props) {
                                                         {props.status_code === 200 && Object.values(cookiesData).includes(null) === true ?
                                                             <a className='btn theme-bg-color btn-md text-white float' href="#javascript" data-bs-toggle="modal" data-bs-target="#editProfile" style={{ width: '30%' }} onClick={handleShowProfilUpdate}>Dapatkan Saldo Bonus</a>
                                                             :
-                                                            <a className='btn theme-bg-color btn-md text-white float' href="#javascript" data-bs-toggle="modal" data-bs-target="#editProfile" style={{ width: '30%' }} onClick={handleShowProfilUpdate}>Rubah Data Profil</a>
+                                                            <a className='btn theme-bg-color btn-md text-white float' href="#javascript" data-bs-toggle="modal" data-bs-target="#editProfile" style={{ width: '30%' }} onClick={handleShowProfilUpdate}>Ubah Data Profil</a>
                                                         }
 
                                                         {/* <div className="dashboard-title mb-3">

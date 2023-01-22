@@ -6,6 +6,30 @@ import Head from 'next/head';
 import axios from 'axios'
 import Header from '../components/header';
 import DashboardReseller from '../components/dashboard-reseller';
+import Select from 'react-select';
+import { Modal, Button, Form } from 'react-bootstrap';
+/*
+ * assuming the API returns something like this:
+ *   const json = [
+ *      { value: 'one', label: 'One' },
+ *      { value: 'two', label: 'Two' }
+ *   ]
+ */
+ 
+// const getOptions = (input) => {
+//     return fetch(`/users/${input}.json`)
+//       .then((response) => {
+//         return response.json();
+//       }).then((json) => {
+//         return { options: json };
+//       });
+//   }
+   
+//   <Select.Async
+//     name="form-field-name"
+//     value="one"
+//     loadOptions={getOptions}
+//   />
 
 function Address(props) {
     const router = useRouter()

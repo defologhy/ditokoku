@@ -24,6 +24,7 @@ function TopUpBalanceRegular(props) {
     const [topupBalanceRegular, setTopupBalanceRegular] = useState([])
     const [totalRecordsTopupBalanceRegular, setTotalRecordsTopupBalanceRegular] = useState([])
     const [bankAccounts, setBankAccounts] = useState([])
+    const [configurationPaymentAccountDestination, setConfigurationPaymentAccountDestination] = useState([])
     const handleCloseModalInsertTopUp = () => setShowModalInsertTopUp(false);
     const [showModalConfirm, setShowModalConfirm] = useState(false);
     const handleCloseModalConfirm = () => setShowModalConfirm(false);
@@ -33,10 +34,12 @@ function TopUpBalanceRegular(props) {
     // state for add
     const [bankAccountAdd, setBankAccountAdd] = useState("");
     const [amountAdd, setAmountAdd] = useState(0);
-
+    const [paymentAccountDestinationIdAdd, setPaymentAccountDestinationIdAdd] = useState("");
+    
     // state for edit
     const [idEdit, setIdEdit] = useState("");
     const [bankAccountEdit, setBankAccountEdit] = useState("");
+    const [paymentAccountDestinationEditId, setPaymentAccountDestinationEditId] = useState("");
     const [amountEdit, setAmountEdit] = useState(null);
 
     if (process.browser) {
@@ -48,6 +51,7 @@ function TopUpBalanceRegular(props) {
     useEffect(() => {
         getBankAccount();
         getTopupBalanceRegular();
+        getConfigurationPaymentAccountDestination();
     }, []);
 
     const getBankAccount = async () => {
@@ -173,6 +177,65 @@ function TopUpBalanceRegular(props) {
         }
     }
 
+    const getConfigurationPaymentAccountDestination = async () => {
+        await getDataConfigurationPaymentAccountDestination();
+    }
+    const getDataConfigurationPaymentAccountDestination = async () => {
+        try {
+
+            //Set Axios Configuration For Sign In to NextJS Server
+            const axiosConfigForGetData = {
+                url: process.env.REACT_APP_DITOKOKU_API_BASE_URL + process.env.REACT_APP_DITOKOKU_API_VERSION_URL + '/configuration-payment-account-destinations'
+                , method: "GET"
+                , timeout: 40000
+                , responseType: "json"
+                , responseEncoding: "utf8"
+                , headers: { "Content-Type": "application/json" }
+            };
+
+            //Execute Axios Configuration For JsonContentValidation
+            try {
+                const getDataResults = await axios.request(axiosConfigForGetData);
+                const getData = getDataResults.data;
+                console.log("getDataPaymentAccountDestination", getData)
+
+                setConfigurationPaymentAccountDestination((getData.data.length != 0 ? getData.data : []))
+
+                // form.setFieldsValue({
+                //     bannerId : (getData.data.length!=0 ? getData.data[0].banner_id : '')
+                //     , imageConstruct: (getData.data.length!=0 ? getData.data[0].banner_filename : '')
+                //     , descriptionConstruct: (getData.data.length!=0 ? getData.data[0].banner_description : '')/
+                // });
+            } catch (error) {
+                console.log(error)
+                if (error.response == null) {
+                    // Modal.error({
+                    //     title: "Internal Server Error",
+                    //     content: "Error On Get Data SKU Plant Storage Location. (Please contact you system administrator and report this error message)",
+                    // });
+                } else {
+                    // if (error.response.status === 401) {
+                    //     Router.push("/security/sign-in");
+                    //     return {}
+                    // }
+                    // Modal.error({
+                    //     title: error.response.data.error_title,
+                    //     content: error.response.data.error_message,
+                    // });
+                }
+            }
+
+        } catch (error) {
+            console.log(error.error_message)
+            console.log(error)
+            // Modal.error({
+            //     title: error.error_title,
+            //     content: error.error_message,
+            // });
+        }
+    }
+
+
     const handleShowModalAdd = async () => {
         setShowModalInsertTopUp(true)
     }
@@ -194,6 +257,7 @@ function TopUpBalanceRegular(props) {
                 "reseller_id": cookiesData.reseller_id,
                 "reseller_topup_balance_regular_amount": amountAdd,
                 "reseller_payment_account_id": bankAccountAdd,
+                "payment_account_destination_id": paymentAccountDestinationIdAdd,
                 "responsible_user_id": cookiesData.reseller_id
             }
         };
@@ -233,7 +297,8 @@ function TopUpBalanceRegular(props) {
         return async (e) => {
             e.preventDefault()
             setBankAccountEdit(data.reseller_payment_account_id)
-            setAmountEdit(parseInt(data.reseller_topup_balance_regular_amount))
+            setAmountEdit(data.reseller_topup_balance_regular_amount)
+            setPaymentAccountDestinationEditId(data.payment_account_destination_id)
             setIdEdit(data.reseller_topup_balance_regular_id)
 
             setshowModalEditTopup(true)
@@ -326,6 +391,24 @@ function TopUpBalanceRegular(props) {
                             />
                         </Form.Group>
 
+                        <Form.Group className="mb-3">
+                            <Form.Label>Akun Bank Tujuan</Form.Label>
+                            <Form.Select aria-label="Pilih Akun Bank Kamu"
+                                onChange={(e) => setPaymentAccountDestinationIdAdd(e.target.value)}>
+                                <option value="">Pilih Akun Bank Tujuan</option>
+                                {
+                                    configurationPaymentAccountDestination.map(data => {
+                                        return (
+                                            <>
+                                                <option value={data.payment_account_destination_id}>{data.payment_account_destination_bank_name + ' - ' + data.payment_account_destination_number}</option>
+                                            </>
+                                        )
+                                    })
+                                }
+
+                            </Form.Select>
+                        </Form.Group>
+
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -355,7 +438,7 @@ function TopUpBalanceRegular(props) {
 
             {showModalEditTopup ? <Modal show={showModalEditTopup} onHide={handleCloseModalEditTopup}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{'Rubah data Top Up Saldo Regular'}</Modal.Title>
+                    <Modal.Title>{'Ubah data Top Up Saldo Regular'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -386,6 +469,24 @@ function TopUpBalanceRegular(props) {
                             />
                         </Form.Group>
 
+                        <Form.Group className="mb-3">
+                            <Form.Label>Akun Bank Tujuan</Form.Label>
+                            <Form.Select aria-label="Pilih Akun Bank Kamu" defaultValue={paymentAccountDestinationEditId}
+                                onChange={(e) => setPaymentAccountDestinationEditId(e.target.value)}>
+                                <option value="">Pilih Akun Bank Tujuan</option>
+                                {
+                                    configurationPaymentAccountDestination.map(data => {
+                                        return (
+                                            <>
+                                                <option value={data.payment_account_destination_id}>{data.payment_account_destination_bank_name + ' - ' + data.payment_account_destination_number}</option>
+                                            </>
+                                        )
+                                    })
+                                }
+
+                            </Form.Select>
+                        </Form.Group>
+
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -393,16 +494,16 @@ function TopUpBalanceRegular(props) {
                         Close
                     </Button>
                     <Button variant="info" onClick={handleShowEditTopupConfirm}>
-                        Rubah
+                        Ubah
                     </Button>
                 </Modal.Footer>
             </Modal> : null}
 
             {showModalConfirmEdit ? <Modal show={showModalConfirmEdit} onHide={handleCloseModalConfirmEdit}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{'Rubah data Top Up Saldo Regular'}</Modal.Title>
+                    <Modal.Title>{'Ubah data Top Up Saldo Regular'}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{'Apakah Yakin Akan Rubah Data ? '}</Modal.Body>
+                <Modal.Body>{'Apakah Yakin Akan Ubah Data ? '}</Modal.Body>
                 <Modal.Footer>
                     <Button variant="danger" onClick={handleCloseModalConfirmEdit}>
                         Close
@@ -527,10 +628,10 @@ function TopUpBalanceRegular(props) {
                                                                 </h4>
                                                             </div>
                                                             <div class="dashboard-detail">
-                                                                <h6 class="text-content">Atas Nama : {data.reseller_payment_account_holder_name}</h6>
-                                                                <h6 class="text-content">No Rekening : {data.reseller_payment_account_number}</h6>
-                                                                <h6 class="text-content">Bank : {data.reseller_payment_account_bank_name}</h6>
-                                                                <h6 class="text-content">Nominal : {data.reseller_topup_balance_regular_amount}</h6>
+                                                                <h6 class="text-content">Rekening Kamu : {data.reseller_payment_account_bank_name + ' - ' + data.reseller_payment_account_number + ' - '+ data.reseller_payment_account_holder_name}</h6>
+                                                                <h6 class="text-content">Rekening Tujuan : {data.payment_account_destination_bank_name + ' - ' + data.payment_account_destination_number + ' - '+ data.payment_account_destination_holder_name}</h6>
+                                                                <h6 class="text-content">Nominal : Rp. {data.reseller_topup_balance_regular_amount}</h6>
+                                                                
                                                                 <h6 class="text-content">Status : {data.progress_status_name}</h6>
                                                             </div>
                                                         </div>

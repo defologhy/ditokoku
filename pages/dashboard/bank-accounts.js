@@ -329,16 +329,16 @@ function BankAccount(props) {
                         Close
                     </Button>
                     <Button variant="info" onClick={handleShowEditBankAccountConfirm}>
-                        Rubah
+                        Ubah
                     </Button>
                 </Modal.Footer>
             </Modal> : null}
 
             {showModalConfirmEdit ? <Modal show={showModalConfirmEdit} onHide={handleCloseModalConfirmEdit}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{'Rubah Bank Akun'}</Modal.Title>
+                    <Modal.Title>{'Ubah Bank Akun'}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>{'Apakah Yakin Akan Rubah Data ? '}</Modal.Body>
+                <Modal.Body>{'Apakah Yakin Akan Ubah Data ? '}</Modal.Body>
                 <Modal.Footer>
                     <Button variant="danger" onClick={handleCloseModalConfirmEdit}>
                         Close
